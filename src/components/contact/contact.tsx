@@ -1,11 +1,27 @@
 "use client";
+
+import { motion } from "motion/react";
 import socket from "@/src/config/socket";
 import { ContactCreate } from "@/src/hook/content/useContact";
 import { CreateNotification } from "@/src/hook/useNotification";
 import useWebsiteInfo from "@/src/utils/useWebsiteInfo";
-import { CheckCircle, Clock, Mail, MapPin, MessageSquare, Phone, Send, User } from "lucide-react";
+import {
+  CheckCircle,
+  Clock,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Phone,
+  Send,
+  User,
+  Sparkles,
+  Globe,
+  Headphones,
+  ArrowRight,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -17,66 +33,55 @@ const ContactPage = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-  const { data: siteInfo, loading: siteLoading } = useWebsiteInfo();
+  const { data: siteInfo } = useWebsiteInfo();
 
-  // socket test
-  const [notifications, setNotifications] = useState([]);
+  // Socket notifications
   useEffect(() => {
-    // socket connect
     socket.on("connect", () => {
-      console.log("ðŸŸ¢ Socket connected:", socket.id);
+      console.log("Socket connected:", socket.id);
     });
 
-    //  notification
     socket.on("notification:new", (notif) => {
-      console.log("ðŸ“© New notification:", notif);
-      setNotifications((prev) => [notif, ...prev]);
-      toast.success(` ${notif.title}: ${notif.message}`);
+      toast.success(`${notif.title}: ${notif.message}`);
     });
 
-    // cleanup
     return () => {
       socket.off("connect");
       socket.off("notification:new");
     };
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     const { name, email, phone, subject, message } = formData;
 
     if (!name.trim()) {
-      toast.error("à¦…à¦¨à§à¦—à§à¦°à¦¹ à¦•à¦°à§‡ à¦¨à¦¾à¦® à¦²à¦¿à¦–à§à¦¨");
+      toast.error("Please enter your name");
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim() || !emailRegex.test(email)) {
-      toast.error("à¦…à¦¨à§à¦—à§à¦°à¦¹ à¦•à¦°à§‡ à¦¸à¦ à¦¿à¦• à¦‡à¦®à§‡à¦‡à¦² à¦¦à¦¿à¦¨");
-      return;
-    }
-
-    const phoneRegex = /^(?:\+?88)?01[3-9]\d{8}$/;
-    if (phone && !phoneRegex.test(phone)) {
-      toast.error("à¦…à¦¨à§à¦—à§à¦°à¦¹ à¦•à¦°à§‡ à¦¸à¦ à¦¿à¦• à¦«à§‹à¦¨ à¦¨à¦®à§à¦¬à¦° à¦¦à¦¿à¦¨ (à¦¬à¦¾à¦‚à¦²à¦¾à¦¦à§‡à¦¶ à¦«à¦°à¦®à§à¦¯à¦¾à¦Ÿ)");
+      toast.error("Please enter a valid email");
       return;
     }
 
     if (!subject.trim()) {
-      toast.error("à¦…à¦¨à§à¦—à§à¦°à¦¹ à¦•à¦°à§‡ à¦¬à¦¿à¦·à¦¯à¦¼ à¦²à¦¿à¦–à§à¦¨");
+      toast.error("Please enter a subject");
       return;
     }
 
     if (!message.trim() || message.length < 10) {
-      toast.error("à¦¬à¦¾à¦°à§à¦¤à¦¾à¦Ÿà¦¿ à¦•à¦®à¦ªà¦•à§à¦·à§‡ à§§à§¦ à¦…à¦•à§à¦·à¦°à§‡à¦° à¦¹à¦¤à§‡ à¦¹à¦¬à§‡");
+      toast.error("Message must be at least 10 characters");
       return;
     }
 
@@ -86,9 +91,8 @@ const ContactPage = () => {
       const response = await ContactCreate(formData);
       setIsSubmitted(true);
 
-      // Notify admin via socke
       await CreateNotification({
-        title: "New Email Received",
+        title: "New Contact Message",
         message: `${name} - ${subject}`,
         type: "email",
         referenceId: response.data._id,
@@ -103,304 +107,350 @@ const ContactPage = () => {
         message: "",
       });
 
-      setTimeout(() => setIsSubmitted(false), 3000);
+      setTimeout(() => setIsSubmitted(false), 5000);
+      toast.success("Message sent successfully!");
     } catch (error) {
-      alert("à¦«à¦°à§à¦® à¦¸à¦¾à¦¬à¦®à¦¿à¦Ÿ à¦•à¦°à¦¤à§‡ à¦¸à¦®à¦¸à§à¦¯à¦¾ à¦¹à¦¯à¦¼à§‡à¦›à§‡! à¦†à¦¬à¦¾à¦° à¦šà§‡à¦·à§à¦Ÿà¦¾ à¦•à¦°à§à¦¨à¥¤");
+      toast.error("Failed to send message. Please try again.");
       console.error("Submit error:", error);
     } finally {
       setLoading(false);
     }
   };
 
+  const contactInfo = [
+    {
+      icon: Phone,
+      title: "Phone",
+      value: siteInfo?.number || "+880 1234-567890",
+      gradient: "from-green-500 to-emerald-500",
+    },
+    {
+      icon: Mail,
+      title: "Email",
+      value: siteInfo?.email || "contact@nexcommerce.com",
+      gradient: "from-blue-500 to-cyan-500",
+    },
+    {
+      icon: MapPin,
+      title: "Location",
+      value: siteInfo?.address || "Dhaka, Bangladesh",
+      gradient: "from-purple-500 to-pink-500",
+    },
+    {
+      icon: Clock,
+      title: "Business Hours",
+      value: siteInfo?.deliveryText || "24/7 Available",
+      gradient: "from-amber-500 to-yellow-500",
+    },
+  ];
+
+  const features = [
+    {
+      icon: Headphones,
+      title: "24/7 Support",
+      description: "Round-the-clock customer service",
+    },
+    {
+      icon: Globe,
+      title: "Global Reach",
+      description: "Serving customers worldwide",
+    },
+    {
+      icon: MessageSquare,
+      title: "Quick Response",
+      description: "We reply within 24 hours",
+    },
+  ];
+
   return (
-    <div className="min-h-screen lg:mt-20 py-4 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 relative overflow-hidden">
-      <div className="relative z-10 container mx-auto px-4 py-12 lg:py-20">
-        {/* Header Section */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h1 className="text-5xl lg:text-7xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent mb-6 animate-slide-down">
-            Get In Touch
-          </h1>
-          <p className="text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed animate-slide-up">
-            à¦†à¦®à¦¾à¦¦à§‡à¦° à¦¸à¦¾à¦¥à§‡ à¦¯à§‹à¦—à¦¾à¦¯à§‹à¦— à¦•à¦°à§à¦¨ à¦à¦¬à¦‚ à¦†à¦®à¦°à¦¾ à¦†à¦ªà¦¨à¦¾à¦° à¦¸à¦•à¦² à¦ªà§à¦°à¦¶à§à¦¨à§‡à¦° à¦‰à¦¤à§à¦¤à¦° à¦¦à§‡à¦“à¦¯à¦¼à¦¾à¦° à¦œà¦¨à§à¦¯ à¦ªà§à¦°à¦¸à§à¦¤à§à¦¤
-          </p>
+    <div className="min-h-screen bg-black text-white">
+      {/* Hero Section */}
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-pulse-slow" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse-slow delay-1000" />
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
-          {/* Contact Info Cards */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* Phone Card */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-500 hover:scale-105 hover:rotate-1 group">
-              <div className="flex items-center space-x-4">
-                <div className="w-14 h-14 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Phone className="w-7 h-7 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-white mb-2">à¦«à§‹à¦¨</h3>
-                  <p className="text-gray-300">{siteInfo?.number}</p>
-                </div>
-              </div>
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-8">
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span className="text-gray-400 text-sm">Get In Touch</span>
             </div>
 
-            {/* Email Card */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-500 hover:scale-105 hover:-rotate-1 group">
-              <div className="flex items-center space-x-4">
-                <div className="w-14 h-14 bg-gradient-to-r from-pink-400 to-red-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Mail className="w-7 h-7 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-white mb-2">à¦‡à¦®à§‡à¦‡à¦²</h3>
-                  <p className="text-gray-300">{siteInfo?.email}</p>
-                </div>
-              </div>
-            </div>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black leading-tight mb-6">
+              <span className="block text-white">LET'S START A</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-600">
+                CONVERSATION
+              </span>
+            </h1>
 
-            {/* Location Card */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-500 hover:scale-105 hover:rotate-1 group">
-              <div className="flex items-center space-x-4">
-                <div className="w-14 h-14 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <MapPin className="w-7 h-7 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-white mb-2">à¦ à¦¿à¦•à¦¾à¦¨à¦¾</h3>
-                  <p className="text-gray-300">{siteInfo?.address}</p>
-                </div>
-              </div>
-            </div>
+            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              Have questions? We'd love to hear from you. Send us a message and we'll respond as
+              soon as possible.
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
-            {/* Office Hours Card */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-500 hover:scale-105 hover:-rotate-1 group">
-              <div className="flex items-center space-x-4">
-                <div className="w-14 h-14 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Clock className="w-7 h-7 text-white" />
+      {/* Contact Info Cards */}
+      <section className="py-16 border-y border-white/10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {contactInfo.map((info, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group relative bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-amber-400/30 transition-all duration-300"
+              >
+                <div
+                  className={`inline-flex p-4 rounded-full bg-gradient-to-r ${info.gradient} mb-4 group-hover:scale-110 transition-transform duration-300`}
+                >
+                  <info.icon className="w-6 h-6 text-black" />
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-white mb-2">à¦…à¦«à¦¿à¦¸ à¦¸à¦®à¦¯à¦¼</h3>
-                  <p className="text-gray-300">{siteInfo?.deliveryText}</p>
-                </div>
-              </div>
-            </div>
+                <h3 className="text-lg font-bold text-white mb-2">{info.title}</h3>
+                <p className="text-gray-400 text-sm">{info.value}</p>
+              </motion.div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          {/* Contact Form */}
-          <div className="lg:col-span-2">
-            <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 lg:p-12 border border-white/20 hover:bg-white/15 transition-all duration-500">
-              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-8 text-center">
-                à¦†à¦®à¦¾à¦¦à§‡à¦° à¦¸à¦¾à¦¥à§‡ à¦¯à§‹à¦—à¦¾à¦¯à§‹à¦— à¦•à¦°à§à¦¨
-              </h2>
-
-              {isSubmitted && (
-                <div className="bg-green-500/20 border border-green-500/30 rounded-2xl p-4 mb-6 flex items-center space-x-3 animate-bounce">
-                  <CheckCircle className="w-6 h-6 text-green-400" />
-                  <p className="text-green-300 font-medium">à¦†à¦ªà¦¨à¦¾à¦° à¦¬à¦¾à¦°à§à¦¤à¦¾ à¦¸à¦«à¦²à¦­à¦¾à¦¬à§‡ à¦ªà¦¾à¦ à¦¾à¦¨à§‹ à¦¹à¦¯à¦¼à§‡à¦›à§‡!</p>
-                </div>
-              )}
+      {/* Main Contact Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
+            {/* Left Column - Features */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="space-y-8"
+            >
+              <div>
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                  Why{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">
+                    Contact Us?
+                  </span>
+                </h2>
+                <p className="text-lg text-gray-400 leading-relaxed">
+                  We're here to help you with any questions, concerns, or feedback. Our dedicated
+                  team is committed to providing you with the best support experience.
+                </p>
+              </div>
 
               <div className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  {/* Name Input */}
-                  <div className="group">
-                    <label className="block text-gray-300 text-sm font-medium mb-3">
-                      <User className="inline w-4 h-4 mr-2" />
-                      à¦¨à¦¾à¦® *
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="w-full px-6 py-4 bg-white/5 border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 group-hover:bg-white/10"
-                      placeholder="à¦†à¦ªà¦¨à¦¾à¦° à¦¨à¦¾à¦® à¦²à¦¿à¦–à§à¦¨"
-                      required
-                    />
+                {features.map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="flex items-start gap-4 p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300 group"
+                  >
+                    <div className="p-3 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-lg group-hover:scale-110 transition-transform duration-300">
+                      <feature.icon className="w-6 h-6 text-black" />
+                    </div>
+                    <div>
+                      <h3 className="text-white font-bold mb-1">{feature.title}</h3>
+                      <p className="text-gray-400 text-sm">{feature.description}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Additional Info */}
+              <div className="p-6 bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-400/20 rounded-2xl">
+                <h3 className="text-white font-bold mb-2 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-amber-400" />
+                  Quick Response Guarantee
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  We typically respond to all inquiries within 24 hours during business days. For
+                  urgent matters, please call us directly.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Right Column - Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-8 lg:p-10 hover:bg-white/[0.07] transition-all duration-300">
+                <h2 className="text-3xl font-black text-white mb-6">
+                  Send Us a{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">
+                    Message
+                  </span>
+                </h2>
+
+                {isSubmitted && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-green-500/20 border border-green-500/30 rounded-2xl p-4 mb-6 flex items-center gap-3"
+                  >
+                    <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0" />
+                    <p className="text-green-300 font-medium">
+                      Message sent successfully! We'll get back to you soon.
+                    </p>
+                  </motion.div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Name & Email */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-gray-300 text-sm font-medium mb-2">
+                        <User className="inline w-4 h-4 mr-2" />
+                        Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-amber-500/50 transition-all duration-300"
+                        placeholder="Your name"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-gray-300 text-sm font-medium mb-2">
+                        <Mail className="inline w-4 h-4 mr-2" />
+                        Email *
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-amber-500/50 transition-all duration-300"
+                        placeholder="your@email.com"
+                        required
+                      />
+                    </div>
                   </div>
 
-                  {/* Email Input */}
-                  <div className="group">
-                    <label className="block text-gray-300 text-sm font-medium mb-3">
-                      <Mail className="inline w-4 h-4 mr-2" />
-                      à¦‡à¦®à§‡à¦‡à¦² *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="w-full px-6 py-4 bg-white/5 border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 group-hover:bg-white/10"
-                      placeholder="your@email.com"
-                      required
-                    />
-                  </div>
-                </div>
+                  {/* Phone & Subject */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-gray-300 text-sm font-medium mb-2">
+                        <Phone className="inline w-4 h-4 mr-2" />
+                        Phone
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-amber-500/50 transition-all duration-300"
+                        placeholder="+880 1234-567890"
+                      />
+                    </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  {/* Phone Input */}
-                  <div className="group">
-                    <label className="block text-gray-300 text-sm font-medium mb-3">
-                      <Phone className="inline w-4 h-4 mr-2" />
-                      à¦«à§‹à¦¨ à¦¨à¦®à§à¦¬à¦°
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-6 py-4 bg-white/5 border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 group-hover:bg-white/10"
-                      placeholder="+880 1234-567890"
-                    />
+                    <div>
+                      <label className="block text-gray-300 text-sm font-medium mb-2">
+                        <MessageSquare className="inline w-4 h-4 mr-2" />
+                        Subject *
+                      </label>
+                      <input
+                        type="text"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-amber-500/50 transition-all duration-300"
+                        placeholder="How can we help?"
+                        required
+                      />
+                    </div>
                   </div>
 
-                  {/* Subject Input */}
-                  <div className="group">
-                    <label className="block text-gray-300 text-sm font-medium mb-3">
+                  {/* Message */}
+                  <div>
+                    <label className="block text-gray-300 text-sm font-medium mb-2">
                       <MessageSquare className="inline w-4 h-4 mr-2" />
-                      à¦¬à¦¿à¦·à¦¯à¦¼ *
+                      Message *
                     </label>
-                    <input
-                      type="text"
-                      name="subject"
-                      value={formData.subject}
+                    <textarea
+                      name="message"
+                      value={formData.message}
                       onChange={handleInputChange}
-                      className="w-full px-6 py-4 bg-white/5 border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 group-hover:bg-white/10"
-                      placeholder="à¦†à¦ªà¦¨à¦¾à¦° à¦¬à¦¾à¦°à§à¦¤à¦¾à¦° à¦¬à¦¿à¦·à¦¯à¦¼"
+                      rows={6}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-amber-500/50 transition-all duration-300 resize-none"
+                      placeholder="Tell us more about your inquiry..."
                       required
                     />
                   </div>
-                </div>
 
-                {/* Message Textarea */}
-                <div className="group">
-                  <label className="block text-gray-300 text-sm font-medium mb-3">
-                    <MessageSquare className="inline w-4 h-4 mr-2" />
-                    à¦¬à¦¾à¦°à§à¦¤à¦¾ *
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows="6"
-                    className="w-full px-6 py-4 bg-white/5 border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 resize-none group-hover:bg-white/10"
-                    placeholder="à¦†à¦ªà¦¨à¦¾à¦° à¦¬à¦¾à¦°à§à¦¤à¦¾ à¦¬à¦¿à¦¸à§à¦¤à¦¾à¦°à¦¿à¦¤ à¦²à¦¿à¦–à§à¦¨..."
-                    required
-                  ></textarea>
-                </div>
-
-                {/* Submit Button */}
-                <div className="text-center">
+                  {/* Submit Button */}
                   <button
-                    onClick={handleSubmit}
+                    type="submit"
                     disabled={loading}
-                    className={`inline-flex items-center px-12 py-4 bg-gradient-to-r from-blue-500 to-purple-600 
-    hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-2xl 
-    transition-all duration-300 group cursor-pointer 
-    ${loading ? "opacity-60 cursor-not-allowed" : "hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25"}`}
+                    className={`group w-full py-4 bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-bold rounded-xl transition-all duration-300 flex items-center justify-center gap-2 ${
+                      loading
+                        ? "opacity-60 cursor-not-allowed"
+                        : "hover:scale-105 hover:shadow-lg hover:shadow-amber-500/30"
+                    }`}
                   >
                     {loading ? (
-                      <svg
-                        className="animate-spin h-5 w-5 mr-3"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                        ></path>
-                      </svg>
+                      <>
+                        <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                        <span>Sending...</span>
+                      </>
                     ) : (
-                      <Send className="w-5 h-5 mr-3 group-hover:translate-x-1 transition-transform duration-300" />
+                      <>
+                        <Send className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                        <span>Send Message</span>
+                        <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                      </>
                     )}
-
-                    {loading ? "Sending..." : "à¦¬à¦¾à¦°à§à¦¤à¦¾ à¦ªà¦¾à¦ à¦¾à¦¨"}
                   </button>
-                </div>
+                </form>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
+      </section>
 
-        {/* Bottom CTA Section */}
-        <div className="text-center mt-20 animate-fade-in">
-          <h3 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-            à¦†à¦®à¦°à¦¾ à¦†à¦ªà¦¨à¦¾à¦° à¦¸à§‡à¦¬à¦¾à¦¯à¦¼ à¦¨à¦¿à¦¯à¦¼à§‹à¦œà¦¿à¦¤
-          </h3>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            à¦†à¦®à¦¾à¦¦à§‡à¦° à¦¦à¦² à§¨à§ª/à§­ à¦†à¦ªà¦¨à¦¾à¦° à¦¸à¦•à¦² à¦ªà§à¦°à¦¯à¦¼à§‹à¦œà¦¨à§‡ à¦¸à¦¾à¦¹à¦¾à¦¯à§à¦¯ à¦•à¦°à¦¤à§‡ à¦ªà§à¦°à¦¸à§à¦¤à§à¦¤à¥¤ à¦¯à§‡à¦•à§‹à¦¨à§‹ à¦ªà§à¦°à¦¶à§à¦¨ à¦¬à¦¾ à¦¸à¦®à¦¸à§à¦¯à¦¾à¦° à¦œà¦¨à§à¦¯
-            à¦†à¦®à¦¾à¦¦à§‡à¦° à¦¸à¦¾à¦¥à§‡ à¦¯à§‹à¦—à¦¾à¦¯à§‹à¦— à¦•à¦°à§à¦¨à¥¤
-          </p>
+      {/* CTA Section */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-yellow-500/10" />
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+              Ready to Get{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">
+                Started?
+              </span>
+            </h2>
+            <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+              Our team is available 24/7 to assist you with any questions or concerns. Don't
+              hesitate to reach out!
+            </p>
+          </motion.div>
         </div>
-      </div>
-
-      <style jsx>{`
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes slide-down {
-          from {
-            opacity: 0;
-            transform: translateY(-50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes slide-up {
-          from {
-            opacity: 0;
-            transform: translateY(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-fade-in {
-          animation: fade-in 1s ease-out;
-        }
-
-        .animate-slide-down {
-          animation: slide-down 1s ease-out;
-        }
-
-        .animate-slide-up {
-          animation: slide-up 1s ease-out 0.2s both;
-        }
-
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-
-        /* Mobile responsive adjustments */
-        @media (max-width: 768px) {
-          .container {
-            padding-left: 1rem;
-            padding-right: 1rem;
-          }
-        }
-      `}</style>
+      </section>
     </div>
   );
 };
