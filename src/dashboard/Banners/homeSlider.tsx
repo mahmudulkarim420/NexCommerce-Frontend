@@ -1,7 +1,7 @@
 "use client";
 
 import { HomeBannerCreate, HomeBannerDelete, HomeBannerUploade } from "@/src/hook/useHomeBanner";
-import { useHomeBanner } from "@/src/utlis/useHomeBanner";
+import { useHomeBanner } from "@/src/utils/useHomeBanner";
 import { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 
@@ -169,7 +169,7 @@ const HomeSliderPage = () => {
 
       refetch();
     } catch (error) {
-      toast.error("❌ Toggle slider status error:", error);
+      toast.error("âŒ Toggle slider status error:", error);
     }
   };
 

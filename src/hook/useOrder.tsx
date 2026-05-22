@@ -1,6 +1,9 @@
-import { demoOrders, simulateDelay, getCurrentUser } from "../data/demoData";
+const demoOrders = [] as any[];
+const simulateDelay = (ms: number) => new Promise(r => setTimeout(r, ms));
+const getCurrentUser = [] as any[];
 
-// ✅ Create manual payment order
+
+// âœ… Create manual payment order
 export const createManualPaymentOrder = async (formData) => {
   try {
     await simulateDelay(1000);
@@ -22,7 +25,7 @@ export const createManualPaymentOrder = async (formData) => {
   }
 };
 
-// ✅ Create SSL payment order
+// âœ… Create SSL payment order
 export const createSslPaymentOrder = async (formData) => {
   try {
     await simulateDelay(1000);
@@ -59,7 +62,7 @@ export const submitManualPayment = async (data) => {
   }
 };
 
-// ✅ Initialize SSLCommerz payment session
+// âœ… Initialize SSLCommerz payment session
 export const initPaymentSession = async (payload) => {
   try {
     await simulateDelay(1000);

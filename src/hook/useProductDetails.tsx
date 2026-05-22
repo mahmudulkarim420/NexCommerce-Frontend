@@ -1,15 +1,19 @@
-import { demoProducts, simulateDelay } from "../data/demoData";
+import { productService } from "../services/product.service";
 
-// Fetch single product details
-export const getProductDetailsApi = async (productId) => {
+/**
+ * Fetch single product details from API
+ */
+export const getProductDetailsApi = async (productId: string) => {
   try {
-    if (!productId) return null;
-    await simulateDelay(500);
+    if (!productId) {
+      console.error("Product ID is required");
+      return null;
+    }
 
-    const product = demoProducts.find((p) => p._id === productId);
+    const product = await productService.getById(productId);
     return product || null;
-  } catch (error) {
-    console.error("Get product details error:", error);
-    throw error;
+  } catch (error: any) {
+    console.error("Error fetching product details:", error.message || error);
+    return null;
   }
 };

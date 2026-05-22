@@ -1,4 +1,6 @@
-import { demoLeftBanner, simulateDelay } from "../data/demoData";
+const demoLeftBanner = [] as any[];
+const simulateDelay = (ms: number) => new Promise(r => setTimeout(r, ms));
+
 
 // LeftBanner add
 export const LeftBannerCreate = async (formData) => {

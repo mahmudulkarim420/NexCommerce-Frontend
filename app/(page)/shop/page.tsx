@@ -1,11 +1,11 @@
-import ShopPage from "@/src/compronent/shop/shopComponent"
+import ShopPage from "@/src/components/shop/shopComponent";
 
-const shop =()=> {
+const shop = () => {
   return (
     <div>
-        <ShopPage/>
+      <ShopPage />
     </div>
-  )
-}
+  );
+};
 
-export default shop
+export default shop;

@@ -1,11 +1,11 @@
-import AboutPage from "@/src/compronent/about/about"
+import AboutPage from "@/src/components/about/about";
 
-const about=()=> {
+const about = () => {
   return (
     <div>
-        <AboutPage/>
+      <AboutPage />
     </div>
-  )
-}
+  );
+};
 
-export default about
+export default about;

@@ -1,78 +1,90 @@
-import { demoSubcategories, simulateDelay } from "../data/demoData";
 import { subcategoryGet } from "../redux/subcategorySlice";
+import { categoryService } from "../services/category.service";
 
-// subcatagory add
-export const SubCategoryCreate = async (formData) => {
+/**
+ * Create new subcategory
+ */
+export const SubCategoryCreate = async (formData: any) => {
   try {
-    await simulateDelay(800);
-    const newSubcategory = {
-      _id: `sub${Date.now()}`,
-      ...formData,
-      active: true,
+    const newSubcategory = await categoryService.createSubcategory(formData);
+    return {
+      success: true,
+      data: newSubcategory,
+      message: "Subcategory created successfully!",
     };
-    demoSubcategories.push(newSubcategory);
-    return { success: true, data: newSubcategory, message: "Subcategory created successfully!" };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Subcategory create error:", error);
     throw error;
   }
 };
 
-// subcatagory ALL GET
-export const SubCategoryAllGet = async (dispatch) => {
+/**
+ * Get all subcategories
+ */
+export const SubCategoryAllGet = async (dispatch: any) => {
   try {
-    await simulateDelay(600);
-    dispatch(subcategoryGet(demoSubcategories));
-    return { success: true, data: demoSubcategories };
-  } catch (error) {
+    const subcategories = await categoryService.getAllSubcategories();
+    dispatch(subcategoryGet(subcategories || []));
+    return {
+      success: true,
+      data: subcategories || [],
+    };
+  } catch (error: any) {
     console.error("Subcategory get error:", error);
     throw error;
   }
 };
 
-// get one subcategoti
-export const SubCategoryGetOne = async (subcategoryId) => {
+/**
+ * Get single subcategory
+ */
+export const SubCategoryGetOne = async (subcategoryId: string) => {
   try {
-    await simulateDelay(500);
-    const subcategory = demoSubcategories.find((s) => s._id === subcategoryId);
-    return { success: true, data: subcategory };
-  } catch (error) {
+    if (!subcategoryId) return { success: false, data: null };
+
+    // Note: Backend doesn't have direct endpoint for single subcategory
+    // Fetch all and filter for now
+    const allSubcategories = await categoryService.getAllSubcategories();
+    const subcategory = allSubcategories.find((s: any) => s._id === subcategoryId);
+
+    return {
+      success: !!subcategory,
+      data: subcategory,
+    };
+  } catch (error: any) {
     console.error("Subcategory get one error:", error);
     throw error;
   }
 };
 
-// uplosd subcategoti
-export const SubCategoryUploade = async (formData, subcategoryId) => {
+/**
+ * Update subcategory
+ */
+export const SubCategoryUploade = async (formData: any, subcategoryId: string) => {
   try {
-    await simulateDelay(800);
-    const index = demoSubcategories.findIndex((s) => s._id === subcategoryId);
-    if (index !== -1) {
-      demoSubcategories[index] = { ...demoSubcategories[index], ...formData };
-      return {
-        success: true,
-        data: demoSubcategories[index],
-        message: "Subcategory updated successfully!",
-      };
-    }
-    return { success: false, message: "Subcategory not found" };
-  } catch (error) {
+    const updatedSubcategory = await categoryService.updateSubcategory(subcategoryId, formData);
+    return {
+      success: true,
+      data: updatedSubcategory,
+      message: "Subcategory updated successfully!",
+    };
+  } catch (error: any) {
     console.error("Subcategory update error:", error);
     throw error;
   }
 };
 
-// delete
-export const SubCategoryDelete = async (subcategoryId) => {
+/**
+ * Delete subcategory
+ */
+export const SubCategoryDelete = async (subcategoryId: string) => {
   try {
-    await simulateDelay(600);
-    const index = demoSubcategories.findIndex((s) => s._id === subcategoryId);
-    if (index !== -1) {
-      demoSubcategories.splice(index, 1);
-      return { success: true, message: "Subcategory deleted successfully!" };
-    }
-    return { success: false, message: "Subcategory not found" };
-  } catch (error) {
+    await categoryService.deleteSubcategory(subcategoryId);
+    return {
+      success: true,
+      message: "Subcategory deleted successfully!",
+    };
+  } catch (error: any) {
     console.error("Subcategory delete error:", error);
     throw error;
   }

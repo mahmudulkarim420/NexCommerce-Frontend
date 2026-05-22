@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Trash2, Mail, MailOpen, Clock, User, Phone, MessageSquare, RefreshCw } from 'lucide-react';
-import { ContactDelete } from '@/src/hook/content/useContact';
-import { useGetEmail } from '@/src/utlis/content/useEmail';
-import toast from 'react-hot-toast';
+import React, { useState } from "react";
+import { Trash2, Mail, MailOpen, Clock, User, Phone, MessageSquare, RefreshCw } from "lucide-react";
+import { ContactDelete } from "@/src/hook/content/useContact";
+import { useGetEmail } from "@/src/utils/content/useEmail";
+import toast from "react-hot-toast";
 
 const ContactInboxDashboard = () => {
   const { email, loading, error, refetch } = useGetEmail();
@@ -25,41 +25,41 @@ const ContactInboxDashboard = () => {
 
   const handleDelete = async (id, e) => {
     e.stopPropagation();
-    if (!window.confirm('Are you sure you want to delete this message?')) return;
-    
+    if (!window.confirm("Are you sure you want to delete this message?")) return;
+
     try {
       setDeleting(id);
       await ContactDelete(id);
-      
+
       if (selectedContact?._id === id) {
         setSelectedContact(null);
       }
-      
+
       await refetch();
-      toast.success('Message deleted successfully!');
+      toast.success("Message deleted successfully!");
     } catch (error) {
-      console.error('Error deleting contact:', error);
-      alert('Failed to delete message. Please try again.');
+      console.error("Error deleting contact:", error);
+      alert("Failed to delete message. Please try again.");
     } finally {
       setDeleting(null);
     }
   };
 
   const getTimeAgo = (dateString) => {
-    if (!dateString) return 'Unknown';
-    
+    if (!dateString) return "Unknown";
+
     try {
       const date = new Date(dateString);
       const now = new Date();
       const seconds = Math.floor((now - date) / 1000);
-      
+
       if (seconds < 60) return `${seconds}s ago`;
       if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
       if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
       if (seconds < 604800) return `${Math.floor(seconds / 86400)}d ago`;
       return date.toLocaleDateString();
     } catch (error) {
-      return 'Unknown';
+      return "Unknown";
     }
   };
 
@@ -78,7 +78,7 @@ const ContactInboxDashboard = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
         <div className="text-center bg-red-500/20 backdrop-blur-lg rounded-2xl border border-red-500/50 p-8 max-w-md">
-          <div className="text-red-400 text-6xl mb-4">⚠️</div>
+          <div className="text-red-400 text-6xl mb-4">âš ï¸</div>
           <h2 className="text-white text-2xl font-bold mb-2">Error Loading Messages</h2>
           <p className="text-red-200 mb-4">Failed to fetch contact messages</p>
           <button
@@ -106,7 +106,7 @@ const ContactInboxDashboard = () => {
             disabled={refreshing}
             className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-all disabled:opacity-50"
           >
-            <RefreshCw className={`w-5 h-5 ${refreshing ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-5 h-5 ${refreshing ? "animate-spin" : ""}`} />
             Refresh
           </button>
         </div>
@@ -120,7 +120,7 @@ const ContactInboxDashboard = () => {
                 All Messages ({contacts.length})
               </h2>
             </div>
-            
+
             <div className="divide-y divide-white/10 max-h-[600px] overflow-y-auto">
               {contacts.length === 0 ? (
                 <div className="p-8 text-center text-purple-200">
@@ -133,10 +133,12 @@ const ContactInboxDashboard = () => {
                     key={contact._id || index}
                     onClick={() => setSelectedContact(contact)}
                     className={`p-4 cursor-pointer transition-all duration-300 hover:bg-white/20 ${
-                      selectedContact?._id === contact._id ? 'bg-white/20 border-l-4 border-purple-400' : ''
+                      selectedContact?._id === contact._id
+                        ? "bg-white/20 border-l-4 border-purple-400"
+                        : ""
                     }`}
                     style={{
-                      animation: `slideIn 0.3s ease-out ${index * 0.1}s both`
+                      animation: `slideIn 0.3s ease-out ${index * 0.1}s both`,
                     }}
                   >
                     <div className="flex items-start justify-between gap-3">
@@ -199,7 +201,9 @@ const ContactInboxDashboard = () => {
                   </div>
                   <div className="flex items-center gap-2 text-purple-100 text-sm">
                     <Clock className="w-4 h-4" />
-                    {selectedContact.createdAt ? new Date(selectedContact.createdAt).toLocaleString() : 'Unknown date'}
+                    {selectedContact.createdAt
+                      ? new Date(selectedContact.createdAt).toLocaleString()
+                      : "Unknown date"}
                   </div>
                 </div>
 
@@ -227,7 +231,9 @@ const ContactInboxDashboard = () => {
                         <Phone className="w-5 h-5 text-purple-400" />
                         <span className="text-purple-200 text-sm">Phone</span>
                       </div>
-                      <p className="text-white font-medium">{selectedContact.phone || 'Not provided'}</p>
+                      <p className="text-white font-medium">
+                        {selectedContact.phone || "Not provided"}
+                      </p>
                     </div>
 
                     <div className="bg-white/5 rounded-xl p-4 border border-white/10">
@@ -235,7 +241,9 @@ const ContactInboxDashboard = () => {
                         <Clock className="w-5 h-5 text-purple-400" />
                         <span className="text-purple-200 text-sm">Received</span>
                       </div>
-                      <p className="text-white font-medium">{getTimeAgo(selectedContact.createdAt)}</p>
+                      <p className="text-white font-medium">
+                        {getTimeAgo(selectedContact.createdAt)}
+                      </p>
                     </div>
                   </div>
 
@@ -245,7 +253,9 @@ const ContactInboxDashboard = () => {
                       <MessageSquare className="w-5 h-5 text-purple-400" />
                       <span className="text-purple-200 font-medium">Message</span>
                     </div>
-                    <p className="text-white leading-relaxed whitespace-pre-wrap">{selectedContact.message}</p>
+                    <p className="text-white leading-relaxed whitespace-pre-wrap">
+                      {selectedContact.message}
+                    </p>
                   </div>
                 </div>
               </div>

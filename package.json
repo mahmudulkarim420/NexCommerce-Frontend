@@ -1,5 +1,5 @@
 {
-  "name": "easyshopingmall",
+  "name": "nexcommerce",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,7 +15,7 @@
     "@mui/material": "^7.2.0",
     "@mui/styled-engine-sc": "^7.2.0",
     "@reduxjs/toolkit": "^2.9.0",
-    "axios": "^1.12.2",
+    "axios": "^1.16.1",
     "chart.js": "^4.5.1",
     "firebase": "^12.3.0",
     "lucide-react": "^0.542.0",
@@ -29,6 +29,7 @@
     "react-multi-carousel": "^2.8.6",
     "react-redux": "^9.2.0",
     "recharts": "^3.1.2",
+    "redux-persist": "^6.0.0",
     "socket.io-client": "^4.8.1",
     "styled-components": "^6.1.19"
   },

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { Logout } from "@/src/hook/useAuth";
 
 export default function BlockedPage() {
-  const user = useSelector((state) => state.user.data);
+  const user = useSelector((state: any) => state.user.data);
   const router = useRouter();
 
   useEffect(() => {

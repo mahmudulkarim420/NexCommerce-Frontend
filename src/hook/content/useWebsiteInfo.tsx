@@ -1,4 +1,6 @@
-import { demoWebsiteInfo, simulateDelay } from "../../data/demoData";
+const demoWebsiteInfo = [] as any[];
+const simulateDelay = (ms: number) => new Promise(r => setTimeout(r, ms));
+
 
 // websiteinfo add
 export const WebsiteinfoCreate = async (formData) => {

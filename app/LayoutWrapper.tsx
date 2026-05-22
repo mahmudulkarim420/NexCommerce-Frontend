@@ -1,18 +1,18 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Header from "@/src/compronent/header/header";
-import Footer from "@/src/compronent/Home/Footer";
-import { useGetUser } from "@/src/utlis/useGetUser";
+import Header from "@/src/components/layout/header/Header";
+import Footer from "@/src/components/Home/Footer";
+import { useGetUser } from "@/src/utils/useGetUser";
 import { useDispatch } from "react-redux";
 import { userget, clearUser } from "@/src/redux/userSlice";
 import { useEffect } from "react";
-import BlockedUserRoute from "@/src/utlis/BlockedUserRoute";
+import BlockedUserRoute from "@/src/utils/BlockedUserRoute";
 
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
   const hideLayout = pathname.startsWith("/dashboard");
-  const { user, loading, error } = useGetUser();
+  const { user } = useGetUser();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function LayoutWrapper({ children }) {
   return (
     <BlockedUserRoute>
       {!hideLayout && <Header />}
-      {children}
+      <main className="relative">{children}</main>
       {!hideLayout && <Footer />}
     </BlockedUserRoute>
   );

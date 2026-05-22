@@ -1,4 +1,6 @@
-import { demoBlogs, simulateDelay } from "../../data/demoData";
+const demoBlogs = [] as any[];
+const simulateDelay = (ms: number) => new Promise(r => setTimeout(r, ms));
+
 
 // blog add
 export const BlogCreate = async (formData) => {

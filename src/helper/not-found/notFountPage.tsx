@@ -60,12 +60,12 @@ const PageNotFound = () => {
         {/* Main Message */}
         <div className="mb-8 space-y-4">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            পেজ খুঁজে পাওয়া যায়নি!
+            à¦ªà§‡à¦œ à¦–à§à¦à¦œà§‡ à¦ªà¦¾à¦“à¦¯à¦¼à¦¾ à¦¯à¦¾à¦¯à¦¼à¦¨à¦¿!
           </h2>
           <p className="text-lg text-gray-600 mb-2">
-            দুঃখিত! আপনি যে পেজটি খুঁজছেন সেটি আর এখানে নেই।
+            à¦¦à§à¦ƒà¦–à¦¿à¦¤! à¦†à¦ªà¦¨à¦¿ à¦¯à§‡ à¦ªà§‡à¦œà¦Ÿà¦¿ à¦–à§à¦à¦œà¦›à§‡à¦¨ à¦¸à§‡à¦Ÿà¦¿ à¦†à¦° à¦à¦–à¦¾à¦¨à§‡ à¦¨à§‡à¦‡à¥¤
           </p>
-          <p className="text-base text-gray-500">হয়তো এটি সরানো হয়েছে বা URL ভুল হয়েছে।</p>
+          <p className="text-base text-gray-500">à¦¹à¦¯à¦¼à¦¤à§‹ à¦à¦Ÿà¦¿ à¦¸à¦°à¦¾à¦¨à§‹ à¦¹à¦¯à¦¼à§‡à¦›à§‡ à¦¬à¦¾ URL à¦­à§à¦² à¦¹à¦¯à¦¼à§‡à¦›à§‡à¥¤</p>
         </div>
 
         {/* Search Bar */}
@@ -77,7 +77,7 @@ const PageNotFound = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="পণ্য খুঁজুন..."
+                placeholder="à¦ªà¦£à§à¦¯ à¦–à§à¦à¦œà§à¦¨..."
                 onKeyPress={(e) => e.key === "Enter" && handleSearch(e)}
                 className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-full focus:border-teal-500 focus:outline-none transition-all duration-300 bg-white/80 backdrop-blur-sm"
               />
@@ -85,7 +85,7 @@ const PageNotFound = () => {
                 onClick={handleSearch}
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r  from-emerald-600 via-green-600 to-teal-600 text-white px-6 py-2 rounded-full hover:from-teal-600 hover:to-green-600 transition-all duration-300 hover:scale-105"
               >
-                খুঁজুন
+                à¦–à§à¦à¦œà§à¦¨
               </button>
             </div>
           </div>
@@ -99,7 +99,7 @@ const PageNotFound = () => {
             className="group flex items-center space-x-2 bg-gradient-to-r  from-emerald-600 via-green-600 to-teal-600 text-white px-6 py-3 rounded-full hover:from-teal-600 hover:to-green-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
             <Home className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-            <span>হোমে ফিরুন</span>
+            <span>à¦¹à§‹à¦®à§‡ à¦«à¦¿à¦°à§à¦¨</span>
           </Link>
 
           <Link
@@ -108,23 +108,23 @@ const PageNotFound = () => {
             className="group flex items-center space-x-2 bg-white/80 backdrop-blur-sm text-gray-700 px-6 py-3 rounded-full border-2 border-gray-200 hover:border-gray-300 hover:bg-white transition-all duration-300 transform hover:scale-105"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
-            <span>পূর্বের পেজে যান</span>
+            <span>à¦ªà§‚à¦°à§à¦¬à§‡à¦° à¦ªà§‡à¦œà§‡ à¦¯à¦¾à¦¨</span>
           </Link>
         </div>
 
         {/* Popular Categories */}
         <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">জনপ্রিয় ক্যাটাগরি</h3>
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">à¦œà¦¨à¦ªà§à¦°à¦¿à¦¯à¦¼ à¦•à§à¦¯à¦¾à¦Ÿà¦¾à¦—à¦°à¦¿</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { name: "ইলেকট্রনিক্স", emoji: "📱" },
-              { name: "ফ্যাশন", emoji: "👕" },
-              { name: "বই", emoji: "📚" },
-              { name: "খেলনা", emoji: "🧸" },
-              { name: "কসমেটিক্স", emoji: "💄" },
-              { name: "রান্নাঘর", emoji: "🍳" },
-              { name: "খেলাধুলা", emoji: "⚽" },
-              { name: "জুয়েলারি", emoji: "💍" },
+              { name: "à¦‡à¦²à§‡à¦•à¦Ÿà§à¦°à¦¨à¦¿à¦•à§à¦¸", emoji: "ðŸ“±" },
+              { name: "à¦«à§à¦¯à¦¾à¦¶à¦¨", emoji: "ðŸ‘•" },
+              { name: "à¦¬à¦‡", emoji: "ðŸ“š" },
+              { name: "à¦–à§‡à¦²à¦¨à¦¾", emoji: "ðŸ§¸" },
+              { name: "à¦•à¦¸à¦®à§‡à¦Ÿà¦¿à¦•à§à¦¸", emoji: "ðŸ’„" },
+              { name: "à¦°à¦¾à¦¨à§à¦¨à¦¾à¦˜à¦°", emoji: "ðŸ³" },
+              { name: "à¦–à§‡à¦²à¦¾à¦§à§à¦²à¦¾", emoji: "âš½" },
+              { name: "à¦œà§à¦¯à¦¼à§‡à¦²à¦¾à¦°à¦¿", emoji: "ðŸ’" },
             ].map((category, index) => (
               <button
                 key={index}
@@ -142,25 +142,25 @@ const PageNotFound = () => {
 
         {/* Help Text */}
         <div className="mt-8 text-sm text-gray-500">
-          <p className="mb-2">সাহায্যের প্রয়োজন? আমাদের সাথে যোগাযোগ করুন:</p>
+          <p className="mb-2">à¦¸à¦¾à¦¹à¦¾à¦¯à§à¦¯à§‡à¦° à¦ªà§à¦°à¦¯à¦¼à§‹à¦œà¦¨? à¦†à¦®à¦¾à¦¦à§‡à¦° à¦¸à¦¾à¦¥à§‡ à¦¯à§‹à¦—à¦¾à¦¯à§‹à¦— à¦•à¦°à§à¦¨:</p>
           <div className="flex justify-center space-x-6">
             <a
               href="#"
               className="hover:text-teal-600 transition-colors duration-300 hover:underline"
             >
-              📞 সাপোর্ট
+              ðŸ“ž à¦¸à¦¾à¦ªà§‹à¦°à§à¦Ÿ
             </a>
             <a
               href="#"
               className="hover:text-teal-600 transition-colors duration-300 hover:underline"
             >
-              💬 লাইভ চ্যাট
+              ðŸ’¬ à¦²à¦¾à¦‡à¦­ à¦šà§à¦¯à¦¾à¦Ÿ
             </a>
             <a
               href="#"
               className="hover:text-teal-600 transition-colors duration-300 hover:underline"
             >
-              📧 ইমেইল
+              ðŸ“§ à¦‡à¦®à§‡à¦‡à¦²
             </a>
           </div>
         </div>
@@ -172,7 +172,7 @@ const PageNotFound = () => {
             className="group inline-flex items-center space-x-2 text-gray-500 hover:text-gray-700 transition-all duration-300"
           >
             <RefreshCw className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" />
-            <span className="text-sm">পেজ রিফ্রেশ করুন</span>
+            <span className="text-sm">à¦ªà§‡à¦œ à¦°à¦¿à¦«à§à¦°à§‡à¦¶ à¦•à¦°à§à¦¨</span>
           </button>
         </div>
       </div>

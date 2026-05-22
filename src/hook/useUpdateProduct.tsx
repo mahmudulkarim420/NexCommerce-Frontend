@@ -1,4 +1,6 @@
-import { demoCart, simulateDelay } from "../data/demoData";
+const demoCart = [] as any[];
+const simulateDelay = (ms: number) => new Promise(r => setTimeout(r, ms));
+
 
 // Update product quantity in cart
 export const updateProductQuantityApi = async (updateData, dispatch) => {

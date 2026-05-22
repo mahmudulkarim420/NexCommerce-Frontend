@@ -148,7 +148,7 @@ const ReviewsPage = () => {
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, i) => (
       <span key={i} className={`text-lg ${i < rating ? "text-yellow-400" : "text-gray-600"}`}>
-        ★
+        â˜…
       </span>
     ));
   };
@@ -177,7 +177,7 @@ const ReviewsPage = () => {
             onClick={onClose}
             className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold z-10"
           >
-            ×
+            Ã—
           </button>
           {children}
         </div>
@@ -281,7 +281,7 @@ const ReviewsPage = () => {
                       className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white hover:bg-gray-600 transition-colors flex items-center justify-between"
                     >
                       Rating: {filterRating === "all" ? "All" : `${filterRating} Stars`}
-                      <span>▼</span>
+                      <span>â–¼</span>
                     </button>
                   }
                 >
@@ -375,7 +375,7 @@ const ReviewsPage = () => {
                                 year: "numeric",
                               })}
                             </span>
-                            <span>👍 {review.helpful || 0} helpful</span>
+                            <span>ðŸ‘ {review.helpful || 0} helpful</span>
                           </div>
                         </div>
 
@@ -460,7 +460,7 @@ const ReviewsPage = () => {
           {/* Empty State */}
           {filteredReviews.length === 0 && (
             <div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-lg p-12 text-center animate-fade-in">
-              <div className="text-6xl mb-4">📝</div>
+              <div className="text-6xl mb-4">ðŸ“</div>
               <h3 className="text-xl font-semibold text-white mb-2">No Reviews Found</h3>
               <p className="text-gray-400">Try adjusting your search or filter criteria.</p>
             </div>
@@ -540,7 +540,7 @@ const ReviewsPage = () => {
                     {selectedReview.status}
                   </span>
                   <span className="text-sm text-gray-400 flex items-center">
-                    <span className="mr-1">👍</span> {selectedReview.helpful} people found this
+                    <span className="mr-1">ðŸ‘</span> {selectedReview.helpful} people found this
                     helpful
                   </span>
                 </div>

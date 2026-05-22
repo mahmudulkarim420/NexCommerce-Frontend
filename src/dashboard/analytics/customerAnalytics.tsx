@@ -307,42 +307,42 @@ const CustomerAnalyticsDashboard = () => {
                   title="Total Customers"
                   value={mockCustomerData.totalCustomers.toLocaleString()}
                   change="+8.2% from last month"
-                  icon="👥"
+                  icon="ðŸ‘¥"
                   delay={100}
                 />
                 <StatCard
                   title="New Customers"
                   value={mockCustomerData.newCustomers.toLocaleString()}
                   change="+12.5% from last month"
-                  icon="🆕"
+                  icon="ðŸ†•"
                   delay={200}
                 />
                 <StatCard
                   title="Returning Customers"
                   value={mockCustomerData.returningCustomers.toLocaleString()}
                   change="+5.8% from last month"
-                  icon="🔄"
+                  icon="ðŸ”„"
                   delay={300}
                 />
                 <StatCard
                   title="Retention Rate"
                   value={`${mockCustomerData.customerRetentionRate}%`}
                   change="+2.1% from last month"
-                  icon="📈"
+                  icon="ðŸ“ˆ"
                   delay={400}
                 />
                 <StatCard
                   title="Avg Lifetime Value"
                   value={formatCurrency(mockCustomerData.averageLifetimeValue)}
                   change="+15.3% from last month"
-                  icon="💎"
+                  icon="ðŸ’Ž"
                   delay={500}
                 />
                 <StatCard
                   title="Avg Order Value"
                   value={formatCurrency(mockCustomerData.averageOrderValue)}
                   change="+3.7% from last month"
-                  icon="🛒"
+                  icon="ðŸ›’"
                   delay={600}
                 />
               </div>
@@ -562,14 +562,14 @@ const CustomerAnalyticsDashboard = () => {
               title="Avg Session Duration"
               value={mockCustomerData.behaviorMetrics.averageSessionDuration}
               change="+15.2% from last month"
-              icon="⏱️"
+              icon="â±ï¸"
               delay={100}
             />
             <StatCard
               title="Bounce Rate"
               value={`${mockCustomerData.behaviorMetrics.bounceRate}%`}
               change="-3.1% from last month"
-              icon="📉"
+              icon="ðŸ“‰"
               delay={200}
               trend="down"
             />
@@ -577,14 +577,14 @@ const CustomerAnalyticsDashboard = () => {
               title="Pages per Session"
               value={mockCustomerData.behaviorMetrics.pagesPerSession.toString()}
               change="+8.7% from last month"
-              icon="📄"
+              icon="ðŸ“„"
               delay={300}
             />
             <StatCard
               title="Conversion Rate"
               value={`${mockCustomerData.behaviorMetrics.conversionRate}%`}
               change="+5.4% from last month"
-              icon="🎯"
+              icon="ðŸŽ¯"
               delay={400}
             />
           </div>
@@ -596,7 +596,7 @@ const CustomerAnalyticsDashboard = () => {
             <h3 className="text-3xl font-bold text-white mb-10">Customer Retention Analysis</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center p-8 bg-gradient-to-br from-white/5 to-white/10 rounded-2xl hover:from-white/10 hover:to-white/20 transition-all duration-300 hover:scale-105 border border-white/10 group">
-                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">🔄</div>
+                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">ðŸ”„</div>
                 <h4 className="font-bold text-white mb-4 text-xl">Retention Rate</h4>
                 <p className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
                   {mockCustomerData.customerRetentionRate}%
@@ -606,7 +606,7 @@ const CustomerAnalyticsDashboard = () => {
                 </p>
               </div>
               <div className="text-center p-8 bg-gradient-to-br from-white/5 to-white/10 rounded-2xl hover:from-white/10 hover:to-white/20 transition-all duration-300 hover:scale-105 border border-white/10 group">
-                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">💎</div>
+                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">ðŸ’Ž</div>
                 <h4 className="font-bold text-white mb-4 text-xl">Lifetime Value</h4>
                 <p className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent mb-4">
                   {formatCurrency(mockCustomerData.averageLifetimeValue)}
@@ -614,7 +614,7 @@ const CustomerAnalyticsDashboard = () => {
                 <p className="text-gray-300">Average customer lifetime value</p>
               </div>
               <div className="text-center p-8 bg-gradient-to-br from-white/5 to-white/10 rounded-2xl hover:from-white/10 hover:to-white/20 transition-all duration-300 hover:scale-105 border border-white/10 group">
-                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">📈</div>
+                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">ðŸ“ˆ</div>
                 <h4 className="font-bold text-white mb-4 text-xl">Growth Rate</h4>
                 <p className="text-4xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent mb-4">
                   +8.2%

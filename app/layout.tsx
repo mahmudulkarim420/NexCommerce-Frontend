@@ -1,4 +1,4 @@
-import { Providers } from "@/src/helper/providers";
+import ReduxProvider from "@/src/components/providers/ReduxProvider";
 import { Lato, Roboto } from "next/font/google";
 import "./globals.css";
 import LayoutWrapper from "./LayoutWrapper";
@@ -27,9 +27,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${lato.variable} ${roboto.variable} antialiased`}>
-        <Providers>
+        <ReduxProvider>
           <LayoutWrapper>{children}</LayoutWrapper>
-        </Providers>
+        </ReduxProvider>
         <ToasterClient />
       </body>
     </html>

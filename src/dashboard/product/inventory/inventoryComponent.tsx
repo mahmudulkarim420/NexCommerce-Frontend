@@ -23,11 +23,11 @@ import {
   Tag,
 } from "lucide-react";
 import AnalyticsDashboard from "./analytics";
-import { useProduct } from "@/src/utlis/userProduct";
+import { useProduct } from "@/src/utils/userProduct";
 import { ProductDelete, ProductUpdate } from "@/src/hook/useProduct";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import socket from "@/src/confic/socket";
+import socket from "@/src/config/socket";
 import { CreateNotification } from "@/src/hook/useNotification";
 
 const InventoryDashboard = () => {
@@ -45,8 +45,8 @@ const InventoryDashboard = () => {
   // product get
   const { product, loading, error, refetch } = useProduct(formData);
   // get category data
-  const allCategorydata = useSelector((state) => state.category.allCategorydata);
-  const allsubCategorydata = useSelector((state) => state.subcategory.allsubCategorydata);
+  const allCategorydata = useSelector((state: any) => state.category.allCategorydata);
+  const allsubCategorydata = useSelector((state: any) => state.subcategory.allsubCategorydata);
 
   const [products, setProducts] = useState([]);
 
@@ -212,11 +212,11 @@ const InventoryDashboard = () => {
   //  notification
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("🟢 Socket connected:", socket.id);
+      console.log("ðŸŸ¢ Socket connected:", socket.id);
     });
 
     socket.on("notification:new", (notif) => {
-      console.log("📩 New notification:", notif);
+      console.log("ðŸ“© New notification:", notif);
       setNotifications((prev) => [notif, ...prev]);
       toast.success(`${notif.title}: ${notif.message}`);
     });
@@ -227,7 +227,7 @@ const InventoryDashboard = () => {
     };
   }, []);
 
-  // ✅ Send Notification for Low or Out of Stock
+  // âœ… Send Notification for Low or Out of Stock
   const sendStockNotification = async (product) => {
     try {
       let notifType = "low-stock";
@@ -235,7 +235,7 @@ const InventoryDashboard = () => {
 
       if (product.productStock === 0) {
         notifType = "out-of-stock";
-        message = "Product is Out of Stock ❌";
+        message = "Product is Out of Stock âŒ";
       }
 
       await CreateNotification({
@@ -246,9 +246,9 @@ const InventoryDashboard = () => {
         meta: { stock: product.productStock },
       });
 
-      console.log("✅ Stock notification sent:", product.productName);
+      console.log("âœ… Stock notification sent:", product.productName);
     } catch (error) {
-      console.error("❌ Notification error:", error);
+      console.error("âŒ Notification error:", error);
     }
   };
 
@@ -305,7 +305,7 @@ const InventoryDashboard = () => {
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-4">
                   <Package className="w-8 h-8 text-white/90 group-hover:scale-110 transition-transform duration-300" />
-                  <div className="text-4xl animate-bounce delay-200">📦</div>
+                  <div className="text-4xl animate-bounce delay-200">ðŸ“¦</div>
                 </div>
                 <div className="text-3xl font-black text-white mb-1">{stats.totalProducts}</div>
                 <div className="text-blue-100 font-medium">Total Products</div>
@@ -318,7 +318,7 @@ const InventoryDashboard = () => {
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-4">
                   <TrendingUp className="w-8 h-8 text-white/90 group-hover:scale-110 transition-transform duration-300" />
-                  <div className="text-4xl animate-bounce delay-300">✅</div>
+                  <div className="text-4xl animate-bounce delay-300">âœ…</div>
                 </div>
                 <div className="text-3xl font-black text-white mb-1">{stats.inStockProducts}</div>
                 <div className="text-green-100 font-medium">In Stock</div>
@@ -331,7 +331,7 @@ const InventoryDashboard = () => {
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-4">
                   <AlertTriangle className="w-8 h-8 text-white/90 group-hover:scale-110 transition-transform duration-300" />
-                  <div className="text-4xl animate-bounce delay-400">⚠️</div>
+                  <div className="text-4xl animate-bounce delay-400">âš ï¸</div>
                 </div>
                 <div className="text-3xl font-black text-white mb-1">{stats.lowStockProducts}</div>
                 <div className="text-amber-100 font-medium">Low Stock</div>
@@ -344,7 +344,7 @@ const InventoryDashboard = () => {
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-4">
                   <TrendingDown className="w-8 h-8 text-white/90 group-hover:scale-110 transition-transform duration-300" />
-                  <div className="text-4xl animate-bounce delay-500">💰</div>
+                  <div className="text-4xl animate-bounce delay-500">ðŸ’°</div>
                 </div>
                 <div className="text-3xl font-black text-white mb-1">
                   ${stats.totalValue.toLocaleString()}
@@ -359,9 +359,9 @@ const InventoryDashboard = () => {
           <div className="mb-8">
             <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-2 inline-flex space-x-2">
               {[
-                { id: "products", label: "Products", icon: Package, emoji: "📦" },
-                { id: "analytics", label: "Analytics", icon: BarChart3, emoji: "📊" },
-                { id: "alerts", label: "Alerts", icon: AlertTriangle, emoji: "🚨" },
+                { id: "products", label: "Products", icon: Package, emoji: "ðŸ“¦" },
+                { id: "analytics", label: "Analytics", icon: BarChart3, emoji: "ðŸ“Š" },
+                { id: "alerts", label: "Alerts", icon: AlertTriangle, emoji: "ðŸš¨" },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -390,7 +390,7 @@ const InventoryDashboard = () => {
                       <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5 group-hover:text-white/80 transition-colors" />
                       <input
                         type="text"
-                        placeholder="🔍 Search products..."
+                        placeholder="ðŸ” Search products..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="pl-12 pr-4 py-3 bg-white/20 border border-white/30 rounded-2xl placeholder-white/60 text-white focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300 w-full sm:w-80 hover:bg-white/25"
@@ -433,11 +433,11 @@ const InventoryDashboard = () => {
                   <div className="flex flex-col lg:flex-row gap-3 w-full lg:w-auto">
                     <button className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 text-white rounded-2xl hover:from-emerald-600 hover:via-green-600 hover:to-teal-600 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/25 flex-1 lg:flex-none justify-center font-semibold">
                       <Upload className="w-5 h-5" />
-                      <span>📤 Import</span>
+                      <span>ðŸ“¤ Import</span>
                     </button>
                     <button className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 via-cyan-500 to-indigo-500 text-white rounded-2xl hover:from-blue-600 hover:via-cyan-600 hover:to-indigo-600 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/25 flex-1 lg:flex-none justify-center font-semibold">
                       <Download className="w-5 h-5" />
-                      <span>📥 Export</span>
+                      <span>ðŸ“¥ Export</span>
                     </button>
                     <button
                       onClick={() => {
@@ -447,7 +447,7 @@ const InventoryDashboard = () => {
                       className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500 text-white rounded-2xl hover:from-purple-600 hover:via-pink-600 hover:to-rose-600 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/25 flex-1 lg:flex-none justify-center font-semibold"
                     >
                       <Plus className="w-5 h-5" />
-                      <span>✨ Add Product</span>
+                      <span>âœ¨ Add Product</span>
                     </button>
                   </div>
                 </div>
@@ -464,7 +464,7 @@ const InventoryDashboard = () => {
                         : "text-white/80 hover:text-white hover:bg-white/10"
                     }`}
                   >
-                    🔲 Grid
+                    ðŸ”² Grid
                   </button>
                   <button
                     onClick={() => setViewMode("table")}
@@ -474,7 +474,7 @@ const InventoryDashboard = () => {
                         : "text-white/80 hover:text-white hover:bg-white/10"
                     }`}
                   >
-                    📋 Table
+                    ðŸ“‹ Table
                   </button>
                 </div>
               </div>
@@ -500,7 +500,7 @@ const InventoryDashboard = () => {
                         {/* Trending Badge */}
                         {product.trending === "up" && (
                           <div className="absolute -top-2 -right-2 bg-gradient-to-r from-green-400 to-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
-                            🔥 HOT
+                            ðŸ”¥ HOT
                           </div>
                         )}
 
@@ -513,7 +513,7 @@ const InventoryDashboard = () => {
                                 className="w-16 h-16 object-cover rounded-xl"
                               />
                             ) : (
-                              "📦"
+                              "ðŸ“¦"
                             )}
                           </div>
                           <div className="relative">
@@ -749,7 +749,7 @@ const InventoryDashboard = () => {
               <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6">
                 <h2 className="text-2xl font-bold text-white mb-6 flex items-center space-x-3">
                   <AlertTriangle className="w-6 h-6 text-yellow-400" />
-                  <span>🚨 Stock Alerts</span>
+                  <span>ðŸš¨ Stock Alerts</span>
                 </h2>
 
                 <div className="space-y-4">
@@ -778,19 +778,19 @@ const InventoryDashboard = () => {
                           <h4 className="font-bold text-white">{product?.productName}</h4>
                           <p className="text-sm text-white/70">
                             {product?.productStock === 0
-                              ? "❌ Out of stock"
-                              : `⚠️ Only ${product?.productStock} units left`}
+                              ? "âŒ Out of stock"
+                              : `âš ï¸ Only ${product?.productStock} units left`}
                           </p>
                         </div>
                         <button className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all duration-300 hover:scale-105 font-semibold">
-                          🔄 Restock
+                          ðŸ”„ Restock
                         </button>
                       </div>
                     ))}
 
                   {products.filter((p) => p.productStock <= lowStockThreshold).length === 0 && (
                     <div className="text-center py-12">
-                      <div className="text-8xl mb-4">🎉</div>
+                      <div className="text-8xl mb-4">ðŸŽ‰</div>
                       <h3 className="text-2xl font-bold text-white mb-2">All Good!</h3>
                       <p className="text-white/70">
                         No stock alerts at the moment. Everything is well-stocked!
@@ -997,7 +997,7 @@ const InventoryDashboard = () => {
                         <DollarSign className="w-5 h-5 text-emerald-400" />
                         <span className="text-gray-400 text-sm">Price</span>
                       </div>
-                      <p className="text-white font-semibold text-2xl">৳{viewModal?.price}</p>
+                      <p className="text-white font-semibold text-2xl">à§³{viewModal?.price}</p>
                     </div>
 
                     <div className="bg-slate-700/30 rounded-xl p-4 border border-slate-600/50">
@@ -1088,7 +1088,7 @@ const InventoryDashboard = () => {
           {/* Empty State */}
           {filteredProducts.length === 0 && selectedTab === "products" && (
             <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-12 text-center">
-              <div className="text-8xl mb-6 animate-bounce">🔍</div>
+              <div className="text-8xl mb-6 animate-bounce">ðŸ”</div>
               <h3 className="text-2xl font-bold text-white mb-2">No products found</h3>
               <p className="text-white/70 mb-6 text-lg">
                 Try adjusting your search criteria or add new products
@@ -1101,7 +1101,7 @@ const InventoryDashboard = () => {
                 }}
                 className="px-8 py-4 bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500 text-white rounded-2xl hover:from-purple-600 hover:via-pink-600 hover:to-rose-600 transition-all duration-300 hover:scale-105 hover:shadow-xl font-bold text-lg"
               >
-                ✨ Add First Product
+                âœ¨ Add First Product
               </button>
             </div>
           )}

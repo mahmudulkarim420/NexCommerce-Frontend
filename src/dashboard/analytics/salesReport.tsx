@@ -213,7 +213,7 @@ console.log(filteredData.length,totalPage)
                 </div>
               </div>
               <h3 className="text-3xl font-bold text-white mb-2">${stats.totalRevenue.toLocaleString()}</h3>
-              <p className="text-green-200 text-sm">↑ +10.5% from last month</p>
+              <p className="text-green-200 text-sm">â†‘ +10.5% from last month</p>
             </div>
           </div>
 
@@ -227,7 +227,7 @@ console.log(filteredData.length,totalPage)
                 </div>
               </div>
               <h3 className="text-3xl font-bold text-white mb-2">{stats.totalOrders.toLocaleString()}</h3>
-              <p className="text-green-400 text-sm">↑ +8.2% from last month</p>
+              <p className="text-green-400 text-sm">â†‘ +8.2% from last month</p>
             </div>
           </div>
 
@@ -241,7 +241,7 @@ console.log(filteredData.length,totalPage)
                 </div>
               </div>
               <h3 className="text-3xl font-bold text-white mb-2">{stats.conversionRate}%</h3>
-              <p className="text-green-200 text-sm">↑ +2.1% from last month</p>
+              <p className="text-green-200 text-sm">â†‘ +2.1% from last month</p>
             </div>
           </div>
 
@@ -255,7 +255,7 @@ console.log(filteredData.length,totalPage)
                 </div>
               </div>
               <h3 className="text-3xl font-bold text-white mb-2">{stats.cancelledOrders}</h3>
-              <p className="text-red-400 text-sm">↓ -4.3% from last month</p>
+              <p className="text-red-400 text-sm">â†“ -4.3% from last month</p>
             </div>
           </div>
         </div>

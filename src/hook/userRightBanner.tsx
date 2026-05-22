@@ -1,4 +1,6 @@
-import { demoRightBanner, simulateDelay } from "../data/demoData";
+const demoRightBanner = [] as any[];
+const simulateDelay = (ms: number) => new Promise(r => setTimeout(r, ms));
+
 
 // RightBanner add
 export const RightBannerCreate = async (formData) => {

@@ -1,13 +1,12 @@
-"use client"
+"use client";
 
-import { LeftBannerCreate, LeftBannerDelete, LeftBannerUploade } from "@/src/hook/useLeftBanner"
-import { useGetLeftBanner } from "@/src/utlis/banner/useLeftBanner"
-import { Trash2 } from "lucide-react"
-import { useState, useRef, useEffect } from "react"
-import toast from "react-hot-toast"
+import { LeftBannerCreate, LeftBannerDelete, LeftBannerUploade } from "@/src/hook/useLeftBanner";
+import { useGetLeftBanner } from "@/src/utils/banner/useLeftBanner";
+import { Trash2 } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import toast from "react-hot-toast";
 
 const LeftBanner = () => {
-  
   const { leftbanner, loading, error, refetch } = useGetLeftBanner();
   const [banners, setBanners] = useState([]);
   useEffect(() => {
@@ -19,118 +18,115 @@ const LeftBanner = () => {
       }
     }
   }, [leftbanner]);
-  
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [editingBanner, setEditingBanner] = useState(null)
-   const [deleteModal, setDeleteModal] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingBanner, setEditingBanner] = useState(null);
+  const [deleteModal, setDeleteModal] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     images: "",
     link: "",
     Description: "",
     status: "active",
-  })
-  const [currentPage, setCurrentPage] = useState(1)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [statusFilter, setStatusFilter] = useState("all")
-  const bannersPerPage = 6
-  const fileInputRef = useRef(null)
+  });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const bannersPerPage = 6;
+  const fileInputRef = useRef(null);
 
   const filteredBanners = banners.filter((banner) => {
     const matchesSearch =
       banner.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      banner.Description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesStatus = statusFilter === "all" || banner.status === statusFilter
-    return matchesSearch && matchesStatus
-  })
+      banner.Description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === "all" || banner.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
-  const totalPages = Math.ceil(filteredBanners.length / bannersPerPage)
-  const startIndex = (currentPage - 1) * bannersPerPage
-  const currentBanners = filteredBanners.slice(startIndex, startIndex + bannersPerPage)
+  const totalPages = Math.ceil(filteredBanners.length / bannersPerPage);
+  const startIndex = (currentPage - 1) * bannersPerPage;
+  const currentBanners = filteredBanners.slice(startIndex, startIndex + bannersPerPage);
 
   const openModal = (banner = null) => {
     if (banner) {
-      setEditingBanner(banner)
+      setEditingBanner(banner);
       setFormData({
         title: banner.title,
         images: banner.images,
         link: banner.link,
         Description: banner.Description,
         status: banner.status,
-      })
+      });
     } else {
-      setEditingBanner(null)
+      setEditingBanner(null);
       setFormData({
         title: "",
         images: "",
         link: "",
         Description: "",
         status: "active",
-      })
+      });
     }
-    setIsModalOpen(true)
-  }
+    setIsModalOpen(true);
+  };
 
   const closeModal = () => {
-    setIsModalOpen(false)
-    setEditingBanner(null)
-  }
+    setIsModalOpen(false);
+    setEditingBanner(null);
+  };
 
   // Create or Update Banner
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const data = new FormData();
-    data.append("title", formData.title);
-    data.append("Description", formData.Description);
-    data.append("Link_URL", formData.link);
-    data.append("status", formData.status);
-    if (formData.images) data.append("images", formData.images);
+    try {
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("Description", formData.Description);
+      data.append("Link_URL", formData.link);
+      data.append("status", formData.status);
+      if (formData.images) data.append("images", formData.images);
 
-    let res;
+      let res;
 
-    if (editingBanner) {
-      res = await LeftBannerUploade(data, editingBanner._id || editingBanner.id);
+      if (editingBanner) {
+        res = await LeftBannerUploade(data, editingBanner._id || editingBanner.id);
 
-      setBanners((prev) =>
-        prev.map((banner) =>
-          banner._id === editingBanner._id || banner.id === editingBanner.id
-            ? { ...banner, ...formData }
-            : banner
-        )
-      );
-       refetch();
-      toast.success("✅ Banner updated successfully!");
-    } else {
-      res = await LeftBannerCreate(data);
+        setBanners((prev) =>
+          prev.map((banner) =>
+            banner._id === editingBanner._id || banner.id === editingBanner.id
+              ? { ...banner, ...formData }
+              : banner,
+          ),
+        );
+        refetch();
+        toast.success("âœ… Banner updated successfully!");
+      } else {
+        res = await LeftBannerCreate(data);
 
-      const newBanner = {
-        id: res?.data?._id || Date.now(),
-        ...res?.data || formData,
-        createdAt: new Date().toISOString().split("T")[0],
-      };
+        const newBanner = {
+          id: res?.data?._id || Date.now(),
+          ...(res?.data || formData),
+          createdAt: new Date().toISOString().split("T")[0],
+        };
 
-      setBanners((prev) => [newBanner, ...prev]);
-      refetch();
-    toast.success("✅ Banner Create successfully!");
+        setBanners((prev) => [newBanner, ...prev]);
+        refetch();
+        toast.success("âœ… Banner Create successfully!");
+      }
+
+      closeModal();
+    } catch (error) {
+      console.error("leftbanner save error:", error);
+      toast.error("Something went wrong while saving the banner!");
     }
-
-    
-    closeModal();
-  } catch (error) {
-    console.error("leftbanner save error:", error);
-    toast.error("Something went wrong while saving the banner!");
-  }
-};
-
+  };
 
   // delete banner
- const handleDelete = (id) => {
+  const handleDelete = (id) => {
     setDeleteModal(id);
   };
-//  confirm delete
+  //  confirm delete
   const deleteBanner = async () => {
     try {
       if (!deleteModal) return;
@@ -144,49 +140,43 @@ const LeftBanner = () => {
     }
   };
 
- 
-
-
   // Toggle All Status
- const toggleAllStatus = async () => {
-  try {
-    const hasActive = banners.some((b) => b.status === "active");
-    const newStatus = hasActive ? "inactive" : "active";
-    setBanners((prev) =>
-      prev.map((banner) => ({
-        ...banner,
-        status: newStatus,
-      }))
-    );
-    await Promise.allSettled(
-      banners
-        .filter((b) => b._id)
-        .map(async (banner) => {
-          const data = new FormData();
-          data.append("status", newStatus);
-          await LeftBannerUploade(data, banner._id);
-        })
-    );
-    toast.success(`All banners are now ${newStatus}!`);
-  } catch (error) {
-    console.error("Error toggling all statuses:", error);
-    toast.error("Something went wrong while updating statuses!");
-  }
-};
-
+  const toggleAllStatus = async () => {
+    try {
+      const hasActive = banners.some((b) => b.status === "active");
+      const newStatus = hasActive ? "inactive" : "active";
+      setBanners((prev) =>
+        prev.map((banner) => ({
+          ...banner,
+          status: newStatus,
+        })),
+      );
+      await Promise.allSettled(
+        banners
+          .filter((b) => b._id)
+          .map(async (banner) => {
+            const data = new FormData();
+            data.append("status", newStatus);
+            await LeftBannerUploade(data, banner._id);
+          }),
+      );
+      toast.success(`All banners are now ${newStatus}!`);
+    } catch (error) {
+      console.error("Error toggling all statuses:", error);
+      toast.error("Something went wrong while updating statuses!");
+    }
+  };
 
   const handleImageUpload = (e) => {
-  const file = e.target.files?.[0];
-  if (file) {
-    setFormData({ ...formData, images: file }); 
-  }
-};
-
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData({ ...formData, images: file });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black  relative overflow-hidden">
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-       
         <div
           className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-r from-emerald-500/15 to-teal-500/15 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "2s" }}
@@ -212,7 +202,7 @@ const LeftBanner = () => {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
             <div className="text-center sm:text-left">
               <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-pulse">
-               Left Banner Management
+                Left Banner Management
               </h1>
               <p className="text-gray-300 text-lg md:text-xl font-light">
                 Create stunning promotional banners with advanced controls
@@ -229,7 +219,7 @@ const LeftBanner = () => {
                 onClick={() => openModal()}
                 className="bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25 animate-pulse"
               >
-                ✨ Create New Banner
+                âœ¨ Create New Banner
               </button>
             </div>
           </div>
@@ -245,7 +235,12 @@ const LeftBanner = () => {
                   className="w-full px-6 py-4 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300"
                 />
                 <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-5 h-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -275,7 +270,12 @@ const LeftBanner = () => {
                   <p className="text-3xl font-bold text-white mt-1">{banners.length}</p>
                 </div>
                 <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-7 h-7 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -296,7 +296,12 @@ const LeftBanner = () => {
                   </p>
                 </div>
                 <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-7 h-7 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -317,7 +322,12 @@ const LeftBanner = () => {
                   </p>
                 </div>
                 <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-7 h-7 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -328,12 +338,8 @@ const LeftBanner = () => {
                 </div>
               </div>
             </div>
-
-            
           </div>
         </div>
-
-       
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           {currentBanners.map((banner, index) => (
@@ -364,21 +370,25 @@ const LeftBanner = () => {
                 <h3 className="text-xl font-bold text-white mb-3 group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
                   {banner.title}
                 </h3>
-                <p className="text-gray-300 mb-4 line-clamp-2 leading-relaxed">{banner.Description}</p>
-                <p className="text-sm text-gray-400 mb-6 font-medium">Created: {banner.createdAt}</p>
+                <p className="text-gray-300 mb-4 line-clamp-2 leading-relaxed">
+                  {banner.Description}
+                </p>
+                <p className="text-sm text-gray-400 mb-6 font-medium">
+                  Created: {banner.createdAt}
+                </p>
 
                 <div className="flex gap-3">
                   <button
                     onClick={() => openModal(banner)}
                     className="flex-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/40 hover:to-purple-500/40 text-blue-300 border border-blue-500/30 px-4 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 transform hover:scale-105"
                   >
-                    ✏️ Edit
+                    âœï¸ Edit
                   </button>
                   <button
                     onClick={() => handleDelete(banner._id)}
                     className="flex-1 bg-gradient-to-r from-red-500/20 to-pink-500/20 hover:from-red-500/40 hover:to-pink-500/40 text-red-300 border border-red-500/30 px-4 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25 transform hover:scale-105"
                   >
-                    🗑️ Delete
+                    ðŸ—‘ï¸ Delete
                   </button>
                 </div>
               </div>
@@ -393,7 +403,7 @@ const LeftBanner = () => {
               disabled={currentPage === 1}
               className="px-6 py-3 bg-gradient-to-r from-gray-700/50 to-gray-800/50 border border-gray-600/50 rounded-xl text-white hover:from-gray-600/60 hover:to-gray-700/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
             >
-              ← Previous
+              â† Previous
             </button>
 
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -415,7 +425,7 @@ const LeftBanner = () => {
               disabled={currentPage === totalPages}
               className="px-6 py-3 bg-gradient-to-r from-gray-700/50 to-gray-800/50 border border-gray-600/50 rounded-xl text-white hover:from-gray-600/60 hover:to-gray-700/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105"
             >
-              Next →
+              Next â†’
             </button>
           </div>
         )}
@@ -425,25 +435,28 @@ const LeftBanner = () => {
             <div className="bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-sm border border-gray-700/50 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
               <div className="p-8 border-b border-gray-700/50">
                 <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  {editingBanner ? "✏️ Edit Banner" : "✨ Create New Banner"}
+                  {editingBanner ? "âœï¸ Edit Banner" : "âœ¨ Create New Banner"}
                 </h2>
               </div>
 
               <form onSubmit={handleSubmit} className="p-8 space-y-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-200 mb-3">Banner Title</label>
+                  <label className="block text-sm font-semibold text-gray-200 mb-3">
+                    Banner Title
+                  </label>
                   <input
                     type="text"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300"
                     placeholder="Enter banner title"
-                  
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-200 mb-3">Banner Images</label>
+                  <label className="block text-sm font-semibold text-gray-200 mb-3">
+                    Banner Images
+                  </label>
                   <div className="space-y-4">
                     <input
                       ref={fileInputRef}
@@ -457,7 +470,12 @@ const LeftBanner = () => {
                       onClick={() => fileInputRef.current?.click()}
                       className="w-full px-6 py-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 rounded-xl text-blue-300 hover:from-blue-500/30 hover:to-purple-500/30 transition-all duration-300 flex items-center justify-center gap-3 font-semibold"
                     >
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -465,7 +483,7 @@ const LeftBanner = () => {
                           d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                         />
                       </svg>
-                      📸 Upload Images
+                      ðŸ“¸ Upload Images
                     </button>
                     {formData.images && (
                       <div className="relative">
@@ -487,19 +505,19 @@ const LeftBanner = () => {
                     onChange={(e) => setFormData({ ...formData, link: e.target.value })}
                     className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300"
                     placeholder="https://example.com"
-                  
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-200 mb-3">Description</label>
+                  <label className="block text-sm font-semibold text-gray-200 mb-3">
+                    Description
+                  </label>
                   <textarea
                     value={formData.Description}
                     onChange={(e) => setFormData({ ...formData, Description: e.target.value })}
                     rows={4}
                     className="w-full px-6 py-4 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all duration-300 resize-none"
                     placeholder="Enter banner Description"
-                  
                   />
                 </div>
 
@@ -527,7 +545,7 @@ const LeftBanner = () => {
                     type="submit"
                     className="flex-1 px-8 py-4 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white rounded-xl font-semibold hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25"
                   >
-                    {editingBanner ? "💾 Update Banner" : "✨ Create Banner"}
+                    {editingBanner ? "ðŸ’¾ Update Banner" : "âœ¨ Create Banner"}
                   </button>
                 </div>
               </form>
@@ -569,7 +587,7 @@ const LeftBanner = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default LeftBanner
+export default LeftBanner;

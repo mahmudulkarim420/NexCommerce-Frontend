@@ -1,11 +1,11 @@
-import AccountPage from "@/src/compronent/account/accountPage"
+import AccountPage from "@/src/components/account/accountPage";
 
-const account=()=> {
+const account = () => {
   return (
     <div>
-        <AccountPage/>
+      <AccountPage />
     </div>
-  )
-}
+  );
+};
 
-export default account
+export default account;

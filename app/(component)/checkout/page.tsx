@@ -1,11 +1,11 @@
-import CheckoutComponent from "@/src/compronent/checkout/checkOutComponent"
+import CheckoutComponent from "@/src/components/checkout/checkOutComponent";
 
-const checkout=()=> {
+const checkout = () => {
   return (
     <div>
-        <CheckoutComponent/>
+      <CheckoutComponent />
     </div>
-  )
-}
+  );
+};
 
-export default checkout
+export default checkout;

@@ -1,10 +1,9 @@
+import Hero from "@/src/components/Home/Hero";
 
-import Hero from "@/src/compronent/Home/Hero";
 export default function Home() {
   return (
-    
-    <div>
-     <Hero/>
+    <div className="relative">
+      <Hero />
     </div>
   );
 }

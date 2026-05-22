@@ -172,13 +172,13 @@ const AllCustomersPage = () => {
               {
                 title: "Total Customers",
                 value: customers.length,
-                icon: "👥",
+                icon: "ðŸ‘¥",
                 color: "from-blue-500 to-cyan-500",
               },
               {
                 title: "Active Customers",
                 value: customers.filter((c) => c.status === "active").length,
-                icon: "✅",
+                icon: "âœ…",
                 color: "from-green-500 to-emerald-500",
               },
             ].map((stat, index) => (
@@ -445,7 +445,7 @@ const AllCustomersPage = () => {
                     onClick={() => setShowCustomerModal(false)}
                     className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-all duration-300"
                   >
-                    ✕
+                    âœ•
                   </button>
                 </div>
 

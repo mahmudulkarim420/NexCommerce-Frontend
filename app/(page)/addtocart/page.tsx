@@ -1,11 +1,11 @@
-import ShoppingCartComponent from "@/src/compronent/addToCard/addToCardPage"
+import ShoppingCartComponent from "@/src/components/addToCard/addToCardPage";
 
-const addtocard=()=> {
+const addtocard = () => {
   return (
     <div>
-        <ShoppingCartComponent/>
+      <ShoppingCartComponent />
     </div>
-  )
-}
+  );
+};
 
-export default addtocard
+export default addtocard;

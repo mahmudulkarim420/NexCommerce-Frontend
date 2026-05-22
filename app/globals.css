@@ -1,33 +1,28 @@
 @import "tailwindcss";
 
-
 /* color set up  */
 @theme {
-  --color-primary-color: #39B47f; 
+  --color-primary-color: #39b47f;
 }
-
 
 /* #135E4B */
 /* #4CB572 */
 /* #A1D8B5 */
 /* #CCDCDB */
 
-
 /* header style  */
 
-.MuiToolbar-root{
-  @apply !bg-primary-color;  
+.MuiToolbar-root {
+  @apply !bg-primary-color;
 }
 
-
-.container{
-  @apply w-[98%] lg:w-[97%]  mx-auto my-3 md:my-5 lg:my-3 py-4 ;  
+.container {
+  @apply w-[98%] lg:w-[97%]  mx-auto my-3 md:my-5 lg:my-3 py-4;
 }
 
-.MuiInputBase-root{
-  @apply  !border-2  border-primary-color! !outline-none !rounded-lg !shadow-sm w-full! h-13! ;
+.MuiInputBase-root {
+  @apply !border-2  border-primary-color! !outline-none !rounded-lg !shadow-sm w-full! h-13!;
 }
-
 
 /* Custom Scrollbar Styles */
 .scrollbar-thin::-webkit-scrollbar {
@@ -96,4 +91,96 @@
 
 .animate-donut {
   animation: donutRotate 1.2s ease-out forwards;
+}
+
+/* ===== Modern Banner Wave Animations ===== */
+
+@keyframes wave-slow {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-25px) translateY(-15px);
+  }
+}
+
+@keyframes wave-medium {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-35px) translateY(-20px);
+  }
+}
+
+@keyframes wave-fast {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-45px) translateY(-25px);
+  }
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+}
+
+.animate-wave-slow {
+  animation: wave-slow 8s ease-in-out infinite;
+}
+
+.animate-wave-medium {
+  animation: wave-medium 6s ease-in-out infinite;
+}
+
+.animate-wave-fast {
+  animation: wave-fast 4s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* ===== Additional Premium Animations ===== */
+
+@keyframes delay-200 {
+  0% {
+    animation-delay: 200ms;
+  }
+}
+
+@keyframes delay-400 {
+  0% {
+    animation-delay: 400ms;
+  }
+}
+
+@keyframes delay-1000 {
+  0% {
+    animation-delay: 1000ms;
+  }
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-400 {
+  animation-delay: 400ms;
+}
+
+.delay-1000 {
+  animation-delay: 1000ms;
 }

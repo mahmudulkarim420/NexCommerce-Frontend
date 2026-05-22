@@ -346,7 +346,7 @@ const CustomerGroups=()=> {
                   onClick={() => setSelectedGroup(group)}
                   className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
                 >
-                  View Details →
+                  View Details â†’
                 </button>
               </div>
             </div>

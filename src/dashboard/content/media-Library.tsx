@@ -1,77 +1,86 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { Trash2, Plus, Save, X, RefreshCw, Edit, Check, AlertCircle } from 'lucide-react';
-import { WebsiteinfoCreate, WebsiteinfoDelete, WebsiteinfoUploade } from '@/src/hook/content/useWebsiteInfo';
-import { useGetwebsiteinfo } from '@/src/utlis/content/useWebsiteinfo';
-
+import React, { useState, useEffect } from "react";
+import { Trash2, Plus, Save, X, RefreshCw, Edit, Check, AlertCircle } from "lucide-react";
+import {
+  WebsiteinfoCreate,
+  WebsiteinfoDelete,
+  WebsiteinfoUploade,
+} from "@/src/hook/content/useWebsiteInfo";
+import { useGetwebsiteinfo } from "@/src/utils/content/useWebsiteinfo";
 
 export default function WebsiteInfoAdmin() {
   const { websiteinfo, loading: dataLoading, error: dataError, refetch } = useGetwebsiteinfo();
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  const [notification, setNotification] = useState({ show: false, message: '', type: '' });
+  const [notification, setNotification] = useState({ show: false, message: "", type: "" });
   const [formData, setFormData] = useState({
-    offerText: '',
+    offerText: "",
     countdownDays: 0,
     countdownHours: 0,
     countdownMinutes: 0,
     countdownSeconds: 0,
-    countdownTargetDate: '',
-    deliveryText: '',
-    supportContact: '',
-    discountTitle: '',
-    discountLabel: 'Sale',
+    countdownTargetDate: "",
+    deliveryText: "",
+    supportContact: "",
+    discountTitle: "",
+    discountLabel: "Sale",
     discountPercent: 0,
-    discountLink: '',
-    address: '',
-    email: '',
-    number: '',
+    discountLink: "",
+    address: "",
+    email: "",
+    number: "",
     socialLinks: [],
-    active: true
+    active: true,
   });
 
-  const showNotification = (message, type = 'success') => {
+  const showNotification = (message, type = "success") => {
     setNotification({ show: true, message, type });
     setTimeout(() => {
-      setNotification({ show: false, message: '', type: '' });
+      setNotification({ show: false, message: "", type: "" });
     }, 3000);
   };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : type === 'number' ? Number(value) : value
+      [name]: type === "checkbox" ? checked : type === "number" ? Number(value) : value,
     }));
   };
 
   const handleSocialLinkChange = (index, field, value) => {
     const newSocialLinks = [...formData.socialLinks];
     newSocialLinks[index] = { ...newSocialLinks[index], [field]: value };
-    setFormData(prev => ({ ...prev, socialLinks: newSocialLinks }));
+    setFormData((prev) => ({ ...prev, socialLinks: newSocialLinks }));
   };
 
   const addSocialLink = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      socialLinks: [...prev.socialLinks, { platform: '', icon: '', url: '', active: true }]
+      socialLinks: [...prev.socialLinks, { platform: "", icon: "", url: "", active: true }],
     }));
   };
 
   const removeSocialLink = (index) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      socialLinks: prev.socialLinks.filter((_, i) => i !== index)
+      socialLinks: prev.socialLinks.filter((_, i) => i !== index),
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validation
-    if (!formData.offerText || !formData.discountTitle || !formData.address || !formData.email || !formData.number) {
-      showNotification('Please fill all required fields!', 'error');
+    if (
+      !formData.offerText ||
+      !formData.discountTitle ||
+      !formData.address ||
+      !formData.email ||
+      !formData.number
+    ) {
+      showNotification("Please fill all required fields!", "error");
       return;
     }
 
@@ -79,32 +88,32 @@ export default function WebsiteInfoAdmin() {
     try {
       if (editingId) {
         await WebsiteinfoUploade(formData, editingId);
-        showNotification('Successfully updated!', 'success');
+        showNotification("Successfully updated!", "success");
       } else {
         await WebsiteinfoCreate(formData);
-        showNotification('Successfully created!', 'success');
+        showNotification("Successfully created!", "success");
       }
       resetForm();
       refetch();
     } catch (error) {
-      console.error('Error:', error);
-      showNotification(error.response?.data?.message || 'Operation failed!', 'error');
+      console.error("Error:", error);
+      showNotification(error.response?.data?.message || "Operation failed!", "error");
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this item?')) return;
+    if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     setLoading(true);
     try {
       await WebsiteinfoDelete(id);
-      showNotification('Successfully deleted!', 'success');
+      showNotification("Successfully deleted!", "success");
       refetch();
     } catch (error) {
-      console.error('Error:', error);
-      showNotification('Delete failed!', 'error');
+      console.error("Error:", error);
+      showNotification("Delete failed!", "error");
     } finally {
       setLoading(false);
     }
@@ -112,23 +121,25 @@ export default function WebsiteInfoAdmin() {
 
   const handleEdit = (info) => {
     setFormData({
-      offerText: info.offerText || '',
+      offerText: info.offerText || "",
       countdownDays: info.countdownDays || 0,
       countdownHours: info.countdownHours || 0,
       countdownMinutes: info.countdownMinutes || 0,
       countdownSeconds: info.countdownSeconds || 0,
-      countdownTargetDate: info.countdownTargetDate ? new Date(info.countdownTargetDate).toISOString().slice(0, 16) : '',
-      deliveryText: info.deliveryText || '',
-      supportContact: info.supportContact || '',
-      discountTitle: info.discountTitle || '',
-      discountLabel: info.discountLabel || 'Sale',
+      countdownTargetDate: info.countdownTargetDate
+        ? new Date(info.countdownTargetDate).toISOString().slice(0, 16)
+        : "",
+      deliveryText: info.deliveryText || "",
+      supportContact: info.supportContact || "",
+      discountTitle: info.discountTitle || "",
+      discountLabel: info.discountLabel || "Sale",
       discountPercent: info.discountPercent || 0,
-      discountLink: info.discountLink || '',
-      address: info.address || '',
-      email: info.email || '',
-      number: info.number || '',
+      discountLink: info.discountLink || "",
+      address: info.address || "",
+      email: info.email || "",
+      number: info.number || "",
       socialLinks: info.socialLinks || [],
-      active: info.active !== undefined ? info.active : true
+      active: info.active !== undefined ? info.active : true,
     });
     setEditingId(info._id);
     setShowForm(true);
@@ -136,23 +147,23 @@ export default function WebsiteInfoAdmin() {
 
   const resetForm = () => {
     setFormData({
-      offerText: '',
+      offerText: "",
       countdownDays: 0,
       countdownHours: 0,
       countdownMinutes: 0,
       countdownSeconds: 0,
-      countdownTargetDate: '',
-      deliveryText: '',
-      supportContact: '',
-      discountTitle: '',
-      discountLabel: 'Sale',
+      countdownTargetDate: "",
+      deliveryText: "",
+      supportContact: "",
+      discountTitle: "",
+      discountLabel: "Sale",
       discountPercent: 0,
-      discountLink: '',
-      address: '',
-      email: '',
-      number: '',
+      discountLink: "",
+      address: "",
+      email: "",
+      number: "",
       socialLinks: [],
-      active: true
+      active: true,
     });
     setEditingId(null);
     setShowForm(false);
@@ -163,10 +174,16 @@ export default function WebsiteInfoAdmin() {
       <div className="max-w-7xl mx-auto">
         {/* Notification */}
         {notification.show && (
-          <div className={`fixed top-4 right-4 z-50 ${
-            notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
-          } text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-slide-in`}>
-            {notification.type === 'success' ? <Check className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+          <div
+            className={`fixed top-4 right-4 z-50 ${
+              notification.type === "success" ? "bg-green-500" : "bg-red-500"
+            } text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-slide-in`}
+          >
+            {notification.type === "success" ? (
+              <Check className="w-5 h-5" />
+            ) : (
+              <AlertCircle className="w-5 h-5" />
+            )}
             {notification.message}
           </div>
         )}
@@ -184,7 +201,7 @@ export default function WebsiteInfoAdmin() {
                 disabled={dataLoading || loading}
                 className="flex items-center justify-center gap-2 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition disabled:opacity-50 flex-1 md:flex-initial"
               >
-                <RefreshCw className={`w-4 h-4 ${dataLoading ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`w-4 h-4 ${dataLoading ? "animate-spin" : ""}`} />
                 Refresh
               </button>
               <button
@@ -192,7 +209,7 @@ export default function WebsiteInfoAdmin() {
                 className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition flex-1 md:flex-initial"
               >
                 {showForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                {showForm ? 'Cancel' : 'Add New'}
+                {showForm ? "Cancel" : "Add New"}
               </button>
             </div>
           </div>
@@ -202,13 +219,13 @@ export default function WebsiteInfoAdmin() {
         {showForm && (
           <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-xl rounded-lg shadow-lg p-4 md:p-6 mb-6">
             <h2 className="text-xl md:text-2xl font-bold mb-6">
-              {editingId ? 'Edit Website Info' : 'Create New Website Info'}
+              {editingId ? "Edit Website Info" : "Create New Website Info"}
             </h2>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Top Bar Section */}
               <div className="border-b pb-6">
-                <h3 className="text-lg font-semibold  mb-4">📌 Top Bar Section</h3>
+                <h3 className="text-lg font-semibold  mb-4">ðŸ“Œ Top Bar Section</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium mb-2">
@@ -224,9 +241,11 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Countdown Days</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Countdown Days
+                    </label>
                     <input
                       type="number"
                       name="countdownDays"
@@ -236,9 +255,11 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Countdown Hours</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Countdown Hours
+                    </label>
                     <input
                       type="number"
                       name="countdownHours"
@@ -249,9 +270,11 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Countdown Minutes</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Countdown Minutes
+                    </label>
                     <input
                       type="number"
                       name="countdownMinutes"
@@ -262,9 +285,11 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Countdown Seconds</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Countdown Seconds
+                    </label>
                     <input
                       type="number"
                       name="countdownSeconds"
@@ -275,9 +300,11 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
-                  
+
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Target Date & Time</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Target Date & Time
+                    </label>
                     <input
                       type="datetime-local"
                       name="countdownTargetDate"
@@ -286,9 +313,11 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Delivery Time</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Delivery Time
+                    </label>
                     <input
                       type="text"
                       name="deliveryText"
@@ -298,9 +327,11 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Support Contact</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Support Contact
+                    </label>
                     <input
                       type="text"
                       name="supportContact"
@@ -315,7 +346,9 @@ export default function WebsiteInfoAdmin() {
 
               {/* Discount Section */}
               <div className="border-b pb-6">
-                <h3 className="text-lg font-semibold text-gray-300 mb-4">🎁 Discount / Sale Section</h3>
+                <h3 className="text-lg font-semibold text-gray-300 mb-4">
+                  ðŸŽ Discount / Sale Section
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -331,9 +364,11 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Discount Label</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Discount Label
+                    </label>
                     <input
                       type="text"
                       name="discountLabel"
@@ -343,7 +378,7 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
                       Discount Percent <span className="text-red-500">*</span>
@@ -360,9 +395,11 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
-                  
+
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Discount Link</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Discount Link
+                    </label>
                     <input
                       type="text"
                       name="discountLink"
@@ -377,7 +414,7 @@ export default function WebsiteInfoAdmin() {
 
               {/* Footer Section */}
               <div className="border-b pb-6">
-                <h3 className="text-lg font-semibold text-gray-300 mb-4">📍 Footer Section</h3>
+                <h3 className="text-lg font-semibold text-gray-300 mb-4">ðŸ“ Footer Section</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -393,7 +430,7 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
                       Email <span className="text-red-500">*</span>
@@ -408,7 +445,7 @@ export default function WebsiteInfoAdmin() {
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
                       Phone Number <span className="text-red-500">*</span>
@@ -429,7 +466,7 @@ export default function WebsiteInfoAdmin() {
               {/* Social Media Links */}
               <div className="border-b pb-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-gray-300">🔗 Social Media Links</h3>
+                  <h3 className="text-lg font-semibold text-gray-300">ðŸ”— Social Media Links</h3>
                   <button
                     type="button"
                     onClick={addSocialLink}
@@ -439,55 +476,68 @@ export default function WebsiteInfoAdmin() {
                     Add Link
                   </button>
                 </div>
-                
+
                 <div className="space-y-4">
                   {formData.socialLinks.map((link, index) => (
-                    <div key={index} className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-xl p-4 rounded-lg">
+                    <div
+                      key={index}
+                      className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-xl p-4 rounded-lg"
+                    >
                       <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                         <div>
-                          <label className="block text-xs font-medium text-gray-300 mb-1">Platform</label>
+                          <label className="block text-xs font-medium text-gray-300 mb-1">
+                            Platform
+                          </label>
                           <input
                             type="text"
                             value={link.platform}
-                            onChange={(e) => handleSocialLinkChange(index, 'platform', e.target.value)}
+                            onChange={(e) =>
+                              handleSocialLinkChange(index, "platform", e.target.value)
+                            }
                             placeholder="Facebook"
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"
                           />
                         </div>
-                        
+
                         <div>
-                          <label className="block text-xs font-medium text-gray-300 mb-1">Icon</label>
+                          <label className="block text-xs font-medium text-gray-300 mb-1">
+                            Icon
+                          </label>
                           <input
                             type="text"
-                            value={link.icon || ''}
-                            onChange={(e) => handleSocialLinkChange(index, 'icon', e.target.value)}
+                            value={link.icon || ""}
+                            onChange={(e) => handleSocialLinkChange(index, "icon", e.target.value)}
                             placeholder="fa-facebook"
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"
                           />
                         </div>
-                        
+
                         <div>
-                          <label className="block text-xs font-medium text-gray-300 mb-1">URL</label>
+                          <label className="block text-xs font-medium text-gray-300 mb-1">
+                            URL
+                          </label>
                           <input
                             type="url"
                             value={link.url}
-                            onChange={(e) => handleSocialLinkChange(index, 'url', e.target.value)}
+                            onChange={(e) => handleSocialLinkChange(index, "url", e.target.value)}
                             placeholder="https://facebook.com"
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500"
                           />
                         </div>
-                        
+
                         <div className="flex items-end gap-2">
                           <label className="flex items-center gap-2">
                             <input
                               type="checkbox"
                               checked={link.active}
-                              onChange={(e) => handleSocialLinkChange(index, 'active', e.target.checked)}
+                              onChange={(e) =>
+                                handleSocialLinkChange(index, "active", e.target.checked)
+                              }
                               className="w-4 h-4 text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500"
                             />
                             <span className="text-sm">Active</span>
                           </label>
-                          
+
                           <button
                             type="button"
                             onClick={() => removeSocialLink(index)}
@@ -499,7 +549,7 @@ export default function WebsiteInfoAdmin() {
                       </div>
                     </div>
                   ))}
-                  
+
                   {formData.socialLinks.length === 0 && (
                     <p className="text-gray-300 text-center py-4">No social links added yet</p>
                   )}
@@ -528,9 +578,9 @@ export default function WebsiteInfoAdmin() {
                   className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
                 >
                   <Save className="w-4 h-4" />
-                  {loading ? 'Saving...' : editingId ? 'Update' : 'Create'}
+                  {loading ? "Saving..." : editingId ? "Update" : "Create"}
                 </button>
-                
+
                 <button
                   type="button"
                   onClick={resetForm}
@@ -546,7 +596,7 @@ export default function WebsiteInfoAdmin() {
         {/* Data List */}
         <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-xl rounded-lg shadow-lg p-4 md:p-6">
           <h2 className="text-xl md:text-2xl font-bold text-gray-300 mb-6">Website Info List</h2>
-          
+
           {dataLoading ? (
             <div className="text-center py-12">
               <RefreshCw className="w-8 h-8 animate-spin mx-auto text-indigo-600" />
@@ -576,20 +626,27 @@ export default function WebsiteInfoAdmin() {
           ) : (
             <div className="space-y-4">
               {websiteinfo.map((info) => (
-                <div key={info._id} className="border border-gray-200 rounded-lg p-4 md:p-6 hover:shadow-md transition">
+                <div
+                  key={info._id}
+                  className="border border-gray-200 rounded-lg p-4 md:p-6 hover:shadow-md transition"
+                >
                   <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-4">
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center gap-3 mb-2">
-                        <h3 className="text-lg md:text-xl font-bold text-gray-300">{info.discountTitle}</h3>
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          info.active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                        }`}>
-                          {info.active ? 'Active' : 'Inactive'}
+                        <h3 className="text-lg md:text-xl font-bold text-gray-300">
+                          {info.discountTitle}
+                        </h3>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${
+                            info.active ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                          }`}
+                        >
+                          {info.active ? "Active" : "Inactive"}
                         </span>
                       </div>
                       <p className="text-gray-300 text-sm md:text-base">{info.offerText}</p>
                     </div>
-                    
+
                     <div className="flex gap-2 w-full md:w-auto">
                       <button
                         onClick={() => handleEdit(info)}
@@ -608,7 +665,7 @@ export default function WebsiteInfoAdmin() {
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                     <div>
                       <span className="font-medium text-gray-300">Discount:</span>

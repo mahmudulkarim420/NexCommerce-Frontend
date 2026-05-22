@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { Bell } from "lucide-react";
-import socket from "../confic/socket"; // socket.io client instance
-import { useNotificationsGet } from "../utlis/useNotificationsGet";
+import socket from "../config/socket"; // socket.io client instance
+import { useNotificationsGet } from "../utils/useNotificationsGet";
 import {
   NotificationAllRead,
   NotificationDelete,
@@ -15,11 +15,11 @@ const NotificationDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  //  backend থেকে notification ফেচ
+  //  backend à¦¥à§‡à¦•à§‡ notification à¦«à§‡à¦š
   const { notification, loading, error, refetch } = useNotificationsGet();
   const [notifications, setNotifications] = useState([]);
 
-  //  প্রথমবার load হওয়ার পর notification state এ সেট করা
+  //  à¦ªà§à¦°à¦¥à¦®à¦¬à¦¾à¦° load à¦¹à¦“à§Ÿà¦¾à¦° à¦ªà¦° notification state à¦ à¦¸à§‡à¦Ÿ à¦•à¦°à¦¾
   useEffect(() => {
     if (notification && Array.isArray(notification)) {
       setNotifications(notification);
@@ -27,12 +27,12 @@ const NotificationDropdown = () => {
     }
   }, [notification]);
 
-  //  socket.io থেকে live notification পাওয়া
+  //  socket.io à¦¥à§‡à¦•à§‡ live notification à¦ªà¦¾à¦“à§Ÿà¦¾
   useEffect(() => {
-    socket.on("connect", () => console.log("🟢 Socket connected:", socket.id));
+    socket.on("connect", () => console.log("ðŸŸ¢ Socket connected:", socket.id));
 
     socket.on("notification:new", (notif) => {
-      console.log("📩 New notification:", notif);
+      console.log("ðŸ“© New notification:", notif);
       setTimeout(() => {
         setNotifications((prev) => [notif, ...prev]);
       }, 500);
@@ -44,13 +44,13 @@ const NotificationDropdown = () => {
     };
   }, []);
 
-  // 🔹 Unread count
+  // ðŸ”¹ Unread count
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
-  // 🔹 Toggle dropdown
+  // ðŸ”¹ Toggle dropdown
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  // 🔹 Mark single notification as read
+  // ðŸ”¹ Mark single notification as read
   const markAsRead = async (id) => {
     try {
       await NotificationSingleRead(id);
@@ -60,7 +60,7 @@ const NotificationDropdown = () => {
     }
   };
 
-  // 🔹 Mark all as read
+  // ðŸ”¹ Mark all as read
   const markAllAsRead = async () => {
     try {
       await NotificationAllRead();
@@ -70,26 +70,26 @@ const NotificationDropdown = () => {
     }
   };
 
-  // 🔹 Delete single notification
+  // ðŸ”¹ Delete single notification
   const handleDelete = async (id) => {
     try {
       // API call
       const res = await NotificationDelete(id);
 
       if (res?.success) {
-        // frontend থেকে remove করা
+        // frontend à¦¥à§‡à¦•à§‡ remove à¦•à¦°à¦¾
         setNotifications((prev) => prev.filter((n) => n._id !== id));
-        toast.success("🗑️ Notification deleted successfully!");
+        toast.success("ðŸ—‘ï¸ Notification deleted successfully!");
       } else {
         toast.error(res?.message || "Failed to delete notification");
       }
     } catch (error) {
       console.error("Error deleting notification:", error);
-      toast.error("❌ Something went wrong while deleting!");
+      toast.error("âŒ Something went wrong while deleting!");
     }
   };
 
-  // 🔹 Dropdown বাইরে ক্লিক করলে বন্ধ হবে
+  // ðŸ”¹ Dropdown à¦¬à¦¾à¦‡à¦°à§‡ à¦•à§à¦²à¦¿à¦• à¦•à¦°à¦²à§‡ à¦¬à¦¨à§à¦§ à¦¹à¦¬à§‡
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

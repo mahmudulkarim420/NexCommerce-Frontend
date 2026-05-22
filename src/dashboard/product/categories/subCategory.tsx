@@ -56,9 +56,9 @@ const AddSubcategoriesComponent = () => {
 
   // categoryget
 
-  const allCategorydata = useSelector((state) => state.category.allCategorydata);
+  const allCategorydata = useSelector((state: any) => state.category.allCategorydata);
   // Get subcategories from Redux store
-  const allsubCategorydata = useSelector((state) => state.subcategory.allsubCategorydata);
+  const allsubCategorydata = useSelector((state: any) => state.subcategory.allsubCategorydata);
   const [categories, setCategories] = useState([]);
   const [categoriename, setCategoriename] = useState("");
   const [categorieid, setCategorieid] = useState("");
@@ -84,36 +84,36 @@ const AddSubcategoriesComponent = () => {
   }, [allsubCategorydata]);
 
   const iconOptions = [
-    "📱",
-    "💻",
-    "⌚",
-    "🎧",
-    "📷",
-    "🖥️",
-    "⌨️",
-    "🖱️",
-    "👕",
-    "👖",
-    "👗",
-    "👠",
-    "👜",
-    "🧥",
-    "👔",
-    "🥾",
-    "🏠",
-    "🛋️",
-    "🛏️",
-    "🪴",
-    "🍳",
-    "🧹",
-    "⚽",
-    "🏀",
-    "🎾",
-    "🏈",
-    "⛳",
-    "🎮",
-    "🎯",
-    "🎨",
+    "ðŸ“±",
+    "ðŸ’»",
+    "âŒš",
+    "ðŸŽ§",
+    "ðŸ“·",
+    "ðŸ–¥ï¸",
+    "âŒ¨ï¸",
+    "ðŸ–±ï¸",
+    "ðŸ‘•",
+    "ðŸ‘–",
+    "ðŸ‘—",
+    "ðŸ‘ ",
+    "ðŸ‘œ",
+    "ðŸ§¥",
+    "ðŸ‘”",
+    "ðŸ¥¾",
+    "ðŸ ",
+    "ðŸ›‹ï¸",
+    "ðŸ›ï¸",
+    "ðŸª´",
+    "ðŸ³",
+    "ðŸ§¹",
+    "âš½",
+    "ðŸ€",
+    "ðŸŽ¾",
+    "ðŸˆ",
+    "â›³",
+    "ðŸŽ®",
+    "ðŸŽ¯",
+    "ðŸŽ¨",
   ];
 
   const generateSlug = (name) => {
@@ -195,7 +195,7 @@ const AddSubcategoriesComponent = () => {
       }
 
       if (response.success) {
-        toast.success(editingId ? "Updated successfully ✅ " : "Created successfully ✅");
+        toast.success(editingId ? "Updated successfully âœ… " : "Created successfully âœ…");
         resetForm();
       }
     } catch (err) {
@@ -214,13 +214,13 @@ const AddSubcategoriesComponent = () => {
 
       if (response.success) {
         setSubcategories((prev) => prev.filter((sub) => sub._id !== id));
-        toast.success(response.message || "Subcategory deleted successfully ✅");
+        toast.success(response.message || "Subcategory deleted successfully âœ…");
       } else {
-        toast.error(response.message || "Delete failed ❌");
+        toast.error(response.message || "Delete failed âŒ");
       }
     } catch (error) {
       console.error("Delete error:", error);
-      toast.error(error.response?.data?.message || "Delete failed ❌");
+      toast.error(error.response?.data?.message || "Delete failed âŒ");
     }
   };
 
@@ -791,7 +791,7 @@ const AddSubcategoriesComponent = () => {
                             boxShadow: `0 0 20px ${categoryColor}40`,
                           }}
                         >
-                          {subcategory?.icon || "📦"}
+                          {subcategory?.icon || "ðŸ“¦"}
                         </div>
                       </div>
                       <button
@@ -883,7 +883,7 @@ const AddSubcategoriesComponent = () => {
                             boxShadow: `0 0 15px ${categoryColor}40`,
                           }}
                         >
-                          {subcategory.icon || "📦"}
+                          {subcategory.icon || "ðŸ“¦"}
                         </div>
 
                         <div className="flex-1">
@@ -1019,7 +1019,7 @@ const AddSubcategoriesComponent = () => {
                             className="w-full h-full object-cover rounded-xl"
                           />
                         ) : (
-                          subcategory.icon || "📦"
+                          subcategory.icon || "ðŸ“¦"
                         )}
                       </div>
                     </div>
@@ -1042,7 +1042,7 @@ const AddSubcategoriesComponent = () => {
                       <div className="flex items-center space-x-3">
                         <div className="w-10 h-10 flex justify-center items-center rounded-lg border-2 border-white/20 shadow-lg">
                           <span className="text-gray-300 text-2xl font-mono">
-                            {subcategory.icon || "📦"}
+                            {subcategory.icon || "ðŸ“¦"}
                           </span>
                         </div>
                       </div>
@@ -1190,7 +1190,7 @@ const AddSubcategoriesComponent = () => {
                               border: `2px solid ${category.color || "#6366F1"}`,
                             }}
                           >
-                            {subcat.icon || "📦"}
+                            {subcat.icon || "ðŸ“¦"}
                           </div>
                           <div>
                             <span className="text-gray-200 font-medium">{subcat.name}</span>

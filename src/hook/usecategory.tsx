@@ -1,4 +1,6 @@
-import { demoCategories, simulateDelay } from "../data/demoData";
+const demoCategories = [] as any[];
+const simulateDelay = (ms: number) => new Promise(r => setTimeout(r, ms));
+
 import { categoryGet } from "../redux/categorySlice";
 
 // category add

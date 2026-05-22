@@ -1,5 +1,5 @@
 "use client";
-import { useHomeBanner } from "@/src/utlis/useHomeBanner";
+import { useHomeBanner } from "@/src/utils/useHomeBanner";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
 

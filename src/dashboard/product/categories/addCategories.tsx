@@ -49,12 +49,12 @@ const AddCategoriesComponent = () => {
   const [showAddForm, setShowAddForm] = useState(false);
 
   // subcategory add
-  const allsubCategorydata = useSelector((state) => state.subcategory.allsubCategorydata);
+  const allsubCategorydata = useSelector((state: any) => state.subcategory.allsubCategorydata);
 
   // category get
   const dispatch = useDispatch();
 
-  const allCategorydata = useSelector((state) => state.category.allCategorydata);
+  const allCategorydata = useSelector((state: any) => state.category.allCategorydata);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -68,28 +68,28 @@ const AddCategoriesComponent = () => {
   }, [allCategorydata]);
 
   const iconOptions = [
-    "📱",
-    "👗",
-    "🏠",
-    "⚽",
-    "📚",
-    "💄",
-    "👪",
-    "🧸",
-    "👚",
-    "👜",
-    "🥾",
-    "👙",
-    "💼",
-    "💝",
-    "🤷‍♂️",
-    "🎨",
-    "🛌",
-    "🏆",
-    "🛒",
-    "🎨",
-    "🎙",
-    "📝",
+    "ðŸ“±",
+    "ðŸ‘—",
+    "ðŸ ",
+    "âš½",
+    "ðŸ“š",
+    "ðŸ’„",
+    "ðŸ‘ª",
+    "ðŸ§¸",
+    "ðŸ‘š",
+    "ðŸ‘œ",
+    "ðŸ¥¾",
+    "ðŸ‘™",
+    "ðŸ’¼",
+    "ðŸ’",
+    "ðŸ¤·â€â™‚ï¸",
+    "ðŸŽ¨",
+    "ðŸ›Œ",
+    "ðŸ†",
+    "ðŸ›’",
+    "ðŸŽ¨",
+    "ðŸŽ™",
+    "ðŸ“",
   ];
 
   const generateSlug = (name) => {
@@ -167,7 +167,7 @@ const AddCategoriesComponent = () => {
       }
 
       if (response.success) {
-        toast.success(editingId ? "Updated successfully ✅ " : "Created successfully ✅");
+        toast.success(editingId ? "Updated successfully âœ… " : "Created successfully âœ…");
         resetForm();
       }
     } catch (err) {
@@ -187,13 +187,13 @@ const AddCategoriesComponent = () => {
 
       if (response.success) {
         setCategories((prev) => prev.filter((sub) => sub._id !== id));
-        toast.success(response.message || "Subcategory deleted successfully ✅");
+        toast.success(response.message || "Subcategory deleted successfully âœ…");
       } else {
-        toast.error(response.message || "Delete failed ❌");
+        toast.error(response.message || "Delete failed âŒ");
       }
     } catch (error) {
       console.error("Delete error:", error);
-      toast.error(error.response?.data?.message || "Delete failed ❌");
+      toast.error(error.response?.data?.message || "Delete failed âŒ");
     }
   };
 

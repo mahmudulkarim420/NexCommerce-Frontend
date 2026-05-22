@@ -1,4 +1,6 @@
-import { demoContactMessages, simulateDelay } from "../../data/demoData";
+const demoContactMessages = [] as any[];
+const simulateDelay = (ms: number) => new Promise(r => setTimeout(r, ms));
+
 
 // Contact add
 export const ContactCreate = async (formData) => {

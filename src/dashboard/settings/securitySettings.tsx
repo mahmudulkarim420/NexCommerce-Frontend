@@ -246,7 +246,7 @@ const SecuritySettings = () => {
               <div>
                 <p className="text-white font-medium">{activity.action}</p>
                 <p className="text-gray-400 text-sm">
-                  IP: {activity.ip} • {activity.time}
+                  IP: {activity.ip} â€¢ {activity.time}
                 </p>
               </div>
               <div
@@ -288,7 +288,7 @@ const SecuritySettings = () => {
             <div>
               <p className="text-white font-medium">Production API Key</p>
               <p className="text-gray-400 text-sm font-mono">
-                {showApiKey ? "pk_live_51H7x2cF..." : "••••••••••••••••••••"}
+                {showApiKey ? "pk_live_51H7x2cF..." : "â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"}
               </p>
             </div>
             <div className="flex space-x-2">

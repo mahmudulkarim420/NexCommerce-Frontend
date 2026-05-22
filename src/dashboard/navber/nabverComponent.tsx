@@ -1,7 +1,7 @@
 "use client";
 import NotificationDropdown from "@/src/helper/notification";
-import { useCategory } from "@/src/utlis/usecategory";
-import { useSubcategory } from "@/src/utlis/useSubcategory";
+import { useCategory } from "@/src/utils/usecategory";
+import { useSubcategory } from "@/src/utils/useSubcategory";
 import {
   AppWindow,
   BarChart3,
@@ -41,7 +41,7 @@ const DashboardNebver = ({ children }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   // admin user data get
-  const data = useSelector((state) => state.user.data);
+  const data = useSelector((state: any) => state.user.data);
   // console.log('data', data);
 
   // category get

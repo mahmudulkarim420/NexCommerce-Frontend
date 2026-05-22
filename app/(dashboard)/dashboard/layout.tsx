@@ -1,5 +1,5 @@
 import DashboardNebver from "@/src/dashboard/navber/nabverComponent";
-import AuthAdminRole from "@/src/utlis/userAdmin";
+import AuthAdminRole from "@/src/utils/userAdmin";
 
 export const metadata = {
   title: "Dashboard - NexCommerce",

@@ -19,7 +19,7 @@ import {
   Key,
   Clock,
 } from "lucide-react";
-import { useGetAllUser } from "@/src/utlis/useGetAllUser";
+import { useGetAllUser } from "@/src/utils/useGetAllUser";
 import { deleteUser, updateUserProfile } from "@/src/hook/useAuth";
 export default function UserRoleManager() {
   // Get all users
@@ -43,8 +43,8 @@ export default function UserRoleManager() {
   }, [allusers]);
 
   const roles = [
-    { value: "USER", label: "User", color: "bg-blue-500", icon: "👤" },
-    { value: "ADMIN", label: "Admin", color: "bg-red-500", icon: "👑" },
+    { value: "USER", label: "User", color: "bg-blue-500", icon: "ðŸ‘¤" },
+    { value: "ADMIN", label: "Admin", color: "bg-red-500", icon: "ðŸ‘‘" },
   ];
 
   const statuses = [
@@ -195,7 +195,7 @@ export default function UserRoleManager() {
 
   const getRoleIcon = (role) => {
     const roleObj = roles.find((r) => r.value === role);
-    return roleObj ? roleObj.icon : "👤";
+    return roleObj ? roleObj.icon : "ðŸ‘¤";
   };
 
   const getStatusColor = (status) => {
@@ -363,7 +363,7 @@ export default function UserRoleManager() {
                       </span>
                       {user?.verify_email && (
                         <span className="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400">
-                          ✓ Verified
+                          âœ“ Verified
                         </span>
                       )}
                     </div>

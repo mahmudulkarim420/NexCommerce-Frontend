@@ -129,7 +129,7 @@ const ForgotPassword = () => {
             <ShoppingBag className="w-8 h-8 text-purple-600" />
           </div>
           <h1 className="text-3xl font-bold text-black mb-2 ">NexCommerce</h1>
-          <p className="text-black/80"> পাসওয়ার্ড রিসেট করতে ধাপগুলো অনুসরণ করুন </p>
+          <p className="text-black/80"> à¦ªà¦¾à¦¸à¦“à¦¯à¦¼à¦¾à¦°à§à¦¡ à¦°à¦¿à¦¸à§‡à¦Ÿ à¦•à¦°à¦¤à§‡ à¦§à¦¾à¦ªà¦—à§à¦²à§‹ à¦…à¦¨à§à¦¸à¦°à¦£ à¦•à¦°à§à¦¨ </p>
         </div>
 
         <div className="bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl p-8 opacity-0 animate-slideUp">
@@ -163,8 +163,8 @@ const ForgotPassword = () => {
           {step === 1 && (
             <div className="space-y-6 animate-fadeIn">
               <div>
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">ইমেইল দিন</h2>
-                <p className="text-gray-600 mb-6">আপনার রেজিস্টার্ড ইমেইল ঠিকানা দিন</p>
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">à¦‡à¦®à§‡à¦‡à¦² à¦¦à¦¿à¦¨</h2>
+                <p className="text-gray-600 mb-6">à¦†à¦ªà¦¨à¦¾à¦° à¦°à§‡à¦œà¦¿à¦¸à§à¦Ÿà¦¾à¦°à§à¦¡ à¦‡à¦®à§‡à¦‡à¦² à¦ à¦¿à¦•à¦¾à¦¨à¦¾ à¦¦à¦¿à¦¨</p>
 
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -198,10 +198,10 @@ const ForgotPassword = () => {
           {step === 2 && (
             <div className="space-y-6 animate-fadeIn">
               <div>
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">ওটিপি যাচাই করুন</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">à¦“à¦Ÿà¦¿à¦ªà¦¿ à¦¯à¦¾à¦šà¦¾à¦‡ à¦•à¦°à§à¦¨</h2>
                 <p className="text-gray-600 mb-6">
-                  <span className="font-medium text-purple-600">{email}</span> আপনাকে পাঠানো ৬
-                  সংখ্যার কোডটি দিন
+                  <span className="font-medium text-purple-600">{email}</span> à¦†à¦ªà¦¨à¦¾à¦•à§‡ à¦ªà¦¾à¦ à¦¾à¦¨à§‹ à§¬
+                  à¦¸à¦‚à¦–à§à¦¯à¦¾à¦° à¦•à§‹à¦¡à¦Ÿà¦¿ à¦¦à¦¿à¦¨
                 </p>
 
                 <div className="relative">
@@ -243,7 +243,7 @@ const ForgotPassword = () => {
                 onClick={handleSendOtp}
                 className="w-full text-purple-600 text-sm hover:underline transition-all"
               >
-                ওটিপি আসছে না? আবার পাঠান।
+                à¦“à¦Ÿà¦¿à¦ªà¦¿ à¦†à¦¸à¦›à§‡ à¦¨à¦¾? à¦†à¦¬à¦¾à¦° à¦ªà¦¾à¦ à¦¾à¦¨à¥¤
               </button>
             </div>
           )}
@@ -253,9 +253,9 @@ const ForgotPassword = () => {
               <div>
                 <h2 className="text-2xl font-bold text-gray-800 mb-2">
                   {" "}
-                  নতুন পাসওয়ার্ড সেট করুন{" "}
+                  à¦¨à¦¤à§à¦¨ à¦ªà¦¾à¦¸à¦“à¦¯à¦¼à¦¾à¦°à§à¦¡ à¦¸à§‡à¦Ÿ à¦•à¦°à§à¦¨{" "}
                 </h2>
-                <p className="text-gray-600 mb-6"> একটি শক্তিশালী পাসওয়ার্ড নির্বাচন করুন </p>
+                <p className="text-gray-600 mb-6"> à¦à¦•à¦Ÿà¦¿ à¦¶à¦•à§à¦¤à¦¿à¦¶à¦¾à¦²à§€ à¦ªà¦¾à¦¸à¦“à¦¯à¦¼à¦¾à¦°à§à¦¡ à¦¨à¦¿à¦°à§à¦¬à¦¾à¦šà¦¨ à¦•à¦°à§à¦¨ </p>
 
                 <div className="space-y-4">
                   <div className="relative">
@@ -355,7 +355,7 @@ const ForgotPassword = () => {
             className="text-green-500  hover:underline flex items-center justify-center gap-2 transition-all"
           >
             <ArrowRight className="w-4 h-4 rotate-180" />
-            সাইন ইন পেজে ফিরে যান
+            à¦¸à¦¾à¦‡à¦¨ à¦‡à¦¨ à¦ªà§‡à¦œà§‡ à¦«à¦¿à¦°à§‡ à¦¯à¦¾à¦¨
           </a>
         </div>
       </div>

@@ -21,7 +21,7 @@ import {
   Zap,
 } from "lucide-react";
 import { getAllUser, getUserProfile } from "@/src/hook/useAuth";
-import { OrderAllAdminGet } from "@/src/utlis/useOrder";
+import { OrderAllAdminGet } from "@/src/utils/useOrder";
 import { ProductAllGet } from "@/src/hook/useProduct";
 
 const DashboardHome = () => {
@@ -106,7 +106,7 @@ const DashboardHome = () => {
         };
 
         const yesterdayOrders = orders.filter(
-          (order) => toDateOnly(order.createdAt).getTime() === yesterday.getTime()
+          (order) => toDateOnly(order.createdAt).getTime() === yesterday.getTime(),
         ).length;
 
         let percentage = 0;
@@ -150,7 +150,7 @@ const DashboardHome = () => {
         yesterday.setDate(yesterday.getDate() - 1);
 
         const yesterdayProducts = allProducts.filter(
-          (p) => new Date(p.createdAt) < yesterday
+          (p) => new Date(p.createdAt) < yesterday,
         ).length;
 
         let percentage = 0;
@@ -198,7 +198,7 @@ const DashboardHome = () => {
     },
     {
       title: "Total Revenue",
-      value: "৳0,00,000",
+      value: "à§³0,00,000",
       change: "+0.00%",
       changeType: "positive",
       icon: DollarSign,
@@ -256,7 +256,7 @@ const DashboardHome = () => {
     {
       id: "#ORD-001",
       customer: "John Doe",
-      amount: "৳1,299",
+      amount: "à§³1,299",
       status: "Completed",
       time: "2 hours ago",
       avatar: "JD",
@@ -264,7 +264,7 @@ const DashboardHome = () => {
     {
       id: "#ORD-002",
       customer: "Jane Smith",
-      amount: "৳899",
+      amount: "à§³899",
       status: "Processing",
       time: "4 hours ago",
       avatar: "JS",
@@ -272,7 +272,7 @@ const DashboardHome = () => {
     {
       id: "#ORD-003",
       customer: "Mike Johnson",
-      amount: "৳2,199",
+      amount: "à§³2,199",
       status: "Shipped",
       time: "6 hours ago",
       avatar: "MJ",
@@ -280,7 +280,7 @@ const DashboardHome = () => {
     {
       id: "#ORD-004",
       customer: "Sarah Wilson",
-      amount: "৳1,599",
+      amount: "à§³1,599",
       status: "Pending",
       time: "8 hours ago",
       avatar: "SW",
@@ -288,10 +288,10 @@ const DashboardHome = () => {
   ];
 
   const topProducts = [
-    { name: "Wireless Headphones", sales: "245 sold", price: "৳3,299", rating: 4.8, trend: "+15%" },
-    { name: "Smart Watch", sales: "189 sold", price: "৳12,999", rating: 4.7, trend: "+12%" },
-    { name: "Phone Case", sales: "156 sold", price: "৳599", rating: 4.9, trend: "+8%" },
-    { name: "Bluetooth Speaker", sales: "134 sold", price: "৳2,199", rating: 4.6, trend: "+5%" },
+    { name: "Wireless Headphones", sales: "245 sold", price: "à§³3,299", rating: 4.8, trend: "+15%" },
+    { name: "Smart Watch", sales: "189 sold", price: "à§³12,999", rating: 4.7, trend: "+12%" },
+    { name: "Phone Case", sales: "156 sold", price: "à§³599", rating: 4.9, trend: "+8%" },
+    { name: "Bluetooth Speaker", sales: "134 sold", price: "à§³2,199", rating: 4.6, trend: "+5%" },
   ];
 
   return (
@@ -308,7 +308,7 @@ const DashboardHome = () => {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <h1 className="text-2xl sm:text-3xl font-bold mb-2 bg-gradient-to-r from-white via-gray-200 to-gray-300 bg-clip-text text-transparent">
-                    {loading ? "Loading..." : `Welcome back, ${user?.name || "Admin"}! 👋`}
+                    {loading ? "Loading..." : `Welcome back, ${user?.name || "Admin"}! ðŸ‘‹`}
                   </h1>
 
                   <p className="text-gray-300 text-sm sm:text-base">
@@ -444,17 +444,17 @@ const DashboardHome = () => {
                               order.status === "Completed"
                                 ? "bg-green-900/50 text-green-300 border border-green-800/50"
                                 : order.status === "Processing"
-                                ? "bg-yellow-900/50 text-yellow-300 border border-yellow-800/50"
-                                : order.status === "Shipped"
-                                ? "bg-blue-900/50 text-blue-300 border border-blue-800/50"
-                                : "bg-gray-800/50 text-gray-300 border border-gray-700/50"
+                                  ? "bg-yellow-900/50 text-yellow-300 border border-yellow-800/50"
+                                  : order.status === "Shipped"
+                                    ? "bg-blue-900/50 text-blue-300 border border-blue-800/50"
+                                    : "bg-gray-800/50 text-gray-300 border border-gray-700/50"
                             } backdrop-blur-sm`}
                           >
                             {order.status}
                           </span>
                         </div>
                         <p className="text-xs text-gray-400 mt-1">
-                          {order.customer} • {order.time}
+                          {order.customer} â€¢ {order.time}
                         </p>
                       </div>
                     </div>
@@ -596,12 +596,12 @@ const DashboardHome = () => {
                         activity.type === "order"
                           ? "bg-gradient-to-r from-gray-700 to-gray-800"
                           : activity.type === "product"
-                          ? "bg-gradient-to-r from-slate-700 to-slate-800"
-                          : activity.type === "user"
-                          ? "bg-gradient-to-r from-zinc-700 to-zinc-800"
-                          : activity.type === "payment"
-                          ? "bg-gradient-to-r from-gray-800 to-black"
-                          : "bg-gradient-to-r from-slate-800 to-gray-900"
+                            ? "bg-gradient-to-r from-slate-700 to-slate-800"
+                            : activity.type === "user"
+                              ? "bg-gradient-to-r from-zinc-700 to-zinc-800"
+                              : activity.type === "payment"
+                                ? "bg-gradient-to-r from-gray-800 to-black"
+                                : "bg-gradient-to-r from-slate-800 to-gray-900"
                       }`}
                     >
                       <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
@@ -846,7 +846,9 @@ const DashboardHome = () => {
 
         /* Enhanced hover effects for dark theme */
         .hover-glow:hover {
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 6px 12px rgba(55, 65, 81, 0.3);
+          box-shadow:
+            0 10px 25px rgba(0, 0, 0, 0.4),
+            0 6px 12px rgba(55, 65, 81, 0.3);
         }
 
         /* Updated gradient animations for black theme */

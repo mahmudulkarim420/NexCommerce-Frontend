@@ -1,4 +1,6 @@
-import { demoNotifications, simulateDelay } from "../data/demoData";
+const demoNotifications = [] as any[];
+const simulateDelay = (ms: number) => new Promise(r => setTimeout(r, ms));
+
 
 // sockeet io product update
 export const CreateNotification = async (formData) => {

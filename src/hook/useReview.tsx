@@ -1,6 +1,9 @@
-import { demoReviews, simulateDelay, getCurrentUser } from "../data/demoData";
+const demoReviews = [] as any[];
+const simulateDelay = (ms: number) => new Promise(r => setTimeout(r, ms));
+const getCurrentUser = [] as any[];
 
-// 1️⃣ Submit a new review (status: pending)
+
+// 1ï¸âƒ£ Submit a new review (status: pending)
 export const submitReview = async (productId, reviewData) => {
   try {
     await simulateDelay(800);
@@ -24,7 +27,7 @@ export const submitReview = async (productId, reviewData) => {
   }
 };
 
-// 6️⃣ Get all reviews (admin - approved + pending + rejected)
+// 6ï¸âƒ£ Get all reviews (admin - approved + pending + rejected)
 export const getAllReviews = async () => {
   try {
     await simulateDelay(600);
@@ -35,7 +38,7 @@ export const getAllReviews = async () => {
   }
 };
 
-// 2️⃣ Get all approved reviews for a product
+// 2ï¸âƒ£ Get all approved reviews for a product
 export const getApprovedReviews = async (productId) => {
   try {
     await simulateDelay(500);
@@ -46,7 +49,7 @@ export const getApprovedReviews = async (productId) => {
   }
 };
 
-// 3️⃣ Get pending reviews (admin)
+// 3ï¸âƒ£ Get pending reviews (admin)
 export const getPendingReviews = async () => {
   try {
     await simulateDelay(600);
@@ -57,7 +60,7 @@ export const getPendingReviews = async () => {
   }
 };
 
-// 4️⃣ Approve review (admin)
+// 4ï¸âƒ£ Approve review (admin)
 export const approveReview = async (reviewId) => {
   try {
     await simulateDelay(500);
@@ -73,7 +76,7 @@ export const approveReview = async (reviewId) => {
   }
 };
 
-// 5️⃣ Reject review (admin)
+// 5ï¸âƒ£ Reject review (admin)
 export const rejectReview = async (reviewId) => {
   try {
     await simulateDelay(500);
@@ -89,7 +92,7 @@ export const rejectReview = async (reviewId) => {
   }
 };
 
-// 7️⃣ Delete review (user – own review / admin)
+// 7ï¸âƒ£ Delete review (user â€“ own review / admin)
 export const deleteReview = async (reviewId) => {
   try {
     await simulateDelay(600);

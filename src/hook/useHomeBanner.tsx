@@ -1,4 +1,6 @@
-import { demoHomeBanners, simulateDelay } from "../data/demoData";
+const demoHomeBanners = [] as any[];
+const simulateDelay = (ms: number) => new Promise(r => setTimeout(r, ms));
+
 
 // HomeBanner add
 export const HomeBannerCreate = async (formData) => {

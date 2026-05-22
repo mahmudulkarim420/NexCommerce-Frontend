@@ -1,12 +1,12 @@
-import WishlistComponent from '@/src/compronent/wishlist/wishLisPage'
-import React from 'react'
+import WishlistComponent from "@/src/components/wishlist/wishLisPage";
+import React from "react";
 
-const wishlist=()=> {
+const wishlist = () => {
   return (
     <div>
-        <WishlistComponent/>
+      <WishlistComponent />
     </div>
-  )
-}
+  );
+};
 
-export default wishlist
+export default wishlist;

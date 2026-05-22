@@ -223,7 +223,7 @@ const ShippingSettings = () => {
                 />
                 <input
                   type="number"
-                  placeholder="Cost (৳)"
+                  placeholder="Cost (à§³)"
                   value={newMethod.cost}
                   onChange={(e) => setNewMethod({ ...newMethod, cost: e.target.value })}
                   className="bg-gray-700 text-white rounded-lg px-4 py-3 border border-gray-600 focus:border-blue-500 focus:outline-none transition-colors"
@@ -237,7 +237,7 @@ const ShippingSettings = () => {
                 />
                 <input
                   type="number"
-                  placeholder="Free Shipping Threshold (৳)"
+                  placeholder="Free Shipping Threshold (à§³)"
                   value={newMethod.freeShippingThreshold}
                   onChange={(e) =>
                     setNewMethod({ ...newMethod, freeShippingThreshold: e.target.value })
@@ -324,7 +324,7 @@ const ShippingSettings = () => {
                         <DollarSign size={16} className="mr-1" />
                         Cost:
                       </span>
-                      <span className="text-white font-semibold">৳{method.cost}</span>
+                      <span className="text-white font-semibold">à§³{method.cost}</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-300 flex items-center">
@@ -339,7 +339,7 @@ const ShippingSettings = () => {
                         Free Shipping:
                       </span>
                       <span className="text-white font-semibold">
-                        Above ৳{method.freeShippingThreshold}
+                        Above à§³{method.freeShippingThreshold}
                       </span>
                     </div>
                   </div>
@@ -481,7 +481,7 @@ const ShippingSettings = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-white font-medium">Free Shipping Threshold (৳)</label>
+                  <label className="text-white font-medium">Free Shipping Threshold (à§³)</label>
                   <input
                     type="number"
                     value={generalSettings.freeShippingThreshold}

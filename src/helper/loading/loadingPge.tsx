@@ -8,10 +8,10 @@ const LoadingPage = () => {
   const [loadingText, setLoadingText] = useState("");
 
   const steps = [
-    { icon: ShoppingBag, text: "দোকান প্রস্তুত করা হচ্ছে...", color: "from-blue-500 to-blue-600" },
-    { icon: Package, text: "পণ্যসমূহ লোড করা হচ্ছে...", color: "from-purple-500 to-purple-600" },
-    { icon: Truck, text: "ডেলিভারি তথ্য আপডেট করা হচ্ছে...", color: "from-green-500 to-green-600" },
-    { icon: Check, text: "সব কিছু প্রস্তুত!", color: "from-emerald-500 to-emerald-600" },
+    { icon: ShoppingBag, text: "à¦¦à§‹à¦•à¦¾à¦¨ à¦ªà§à¦°à¦¸à§à¦¤à§à¦¤ à¦•à¦°à¦¾ à¦¹à¦šà§à¦›à§‡...", color: "from-blue-500 to-blue-600" },
+    { icon: Package, text: "à¦ªà¦£à§à¦¯à¦¸à¦®à§‚à¦¹ à¦²à§‹à¦¡ à¦•à¦°à¦¾ à¦¹à¦šà§à¦›à§‡...", color: "from-purple-500 to-purple-600" },
+    { icon: Truck, text: "à¦¡à§‡à¦²à¦¿à¦­à¦¾à¦°à¦¿ à¦¤à¦¥à§à¦¯ à¦†à¦ªà¦¡à§‡à¦Ÿ à¦•à¦°à¦¾ à¦¹à¦šà§à¦›à§‡...", color: "from-green-500 to-green-600" },
+    { icon: Check, text: "à¦¸à¦¬ à¦•à¦¿à¦›à§ à¦ªà§à¦°à¦¸à§à¦¤à§à¦¤!", color: "from-emerald-500 to-emerald-600" },
   ];
 
   useEffect(() => {
@@ -42,10 +42,10 @@ const LoadingPage = () => {
 
   useEffect(() => {
     const texts = [
-      "NexCommerce এ স্বাগতম...",
-      "আপনার পছন্দের পণ্য খুঁজে নিন...",
-      "সেরা দামে সেরা পণ্য...",
-      "নিরাপদ অনলাইন শপিং...",
+      "NexCommerce à¦ à¦¸à§à¦¬à¦¾à¦—à¦¤à¦®...",
+      "à¦†à¦ªà¦¨à¦¾à¦° à¦ªà¦›à¦¨à§à¦¦à§‡à¦° à¦ªà¦£à§à¦¯ à¦–à§à¦à¦œà§‡ à¦¨à¦¿à¦¨...",
+      "à¦¸à§‡à¦°à¦¾ à¦¦à¦¾à¦®à§‡ à¦¸à§‡à¦°à¦¾ à¦ªà¦£à§à¦¯...",
+      "à¦¨à¦¿à¦°à¦¾à¦ªà¦¦ à¦…à¦¨à¦²à¦¾à¦‡à¦¨ à¦¶à¦ªà¦¿à¦‚...",
     ];
 
     let textIndex = 0;
@@ -91,7 +91,7 @@ const LoadingPage = () => {
             <ShoppingBag className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">NexCommerce</h1>
-          <p className="text-blue-200 text-sm">আপনার বিশ্বস্ত অনলাইন শপিং সাথী</p>
+          <p className="text-blue-200 text-sm">à¦†à¦ªà¦¨à¦¾à¦° à¦¬à¦¿à¦¶à§à¦¬à¦¸à§à¦¤ à¦…à¦¨à¦²à¦¾à¦‡à¦¨ à¦¶à¦ªà¦¿à¦‚ à¦¸à¦¾à¦¥à§€</p>
         </div>
 
         {/* Main Loading Animation */}
@@ -170,10 +170,10 @@ const LoadingPage = () => {
         {/* Loading Features Preview */}
         <div className="grid grid-cols-2 gap-4 mb-8">
           {[
-            { icon: "🛍️", text: "হাজারো পণ্য" },
-            { icon: "🚚", text: "দ্রুত ডেলিভারি" },
-            { icon: "💳", text: "নিরাপদ পেমেন্ট" },
-            { icon: "📞", text: "২৪/৭ সাপোর্ট" },
+            { icon: "ðŸ›ï¸", text: "à¦¹à¦¾à¦œà¦¾à¦°à§‹ à¦ªà¦£à§à¦¯" },
+            { icon: "ðŸšš", text: "à¦¦à§à¦°à§à¦¤ à¦¡à§‡à¦²à¦¿à¦­à¦¾à¦°à¦¿" },
+            { icon: "ðŸ’³", text: "à¦¨à¦¿à¦°à¦¾à¦ªà¦¦ à¦ªà§‡à¦®à§‡à¦¨à§à¦Ÿ" },
+            { icon: "ðŸ“ž", text: "à§¨à§ª/à§­ à¦¸à¦¾à¦ªà§‹à¦°à§à¦Ÿ" },
           ].map((feature, index) => (
             <div
               key={index}
@@ -201,7 +201,7 @@ const LoadingPage = () => {
 
         {/* Tips */}
         <div className="text-xs text-white/60">
-          <p>💡 টিপস: লোডিং এর সময় আপনার wishlist চেক করুন</p>
+          <p>ðŸ’¡ à¦Ÿà¦¿à¦ªà¦¸: à¦²à§‹à¦¡à¦¿à¦‚ à¦à¦° à¦¸à¦®à¦¯à¦¼ à¦†à¦ªà¦¨à¦¾à¦° wishlist à¦šà§‡à¦• à¦•à¦°à§à¦¨</p>
         </div>
 
         {/* Pulsing Dots */}

@@ -17,7 +17,7 @@ import {
 import { ProductCreate, ProductNotification } from "@/src/hook/useProduct";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import socket from "@/src/confic/socket";
+import socket from "@/src/config/socket";
 import { useEffect } from "react";
 
 const AddProductComponent = () => {
@@ -48,21 +48,21 @@ const AddProductComponent = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   //  subcategory and category ..
-  const allsubCategorydata = useSelector((state) => state.subcategory.allsubCategorydata);
-  const allCategorydata = useSelector((state) => state.category.allCategorydata);
+  const allsubCategorydata = useSelector((state: any) => state.subcategory.allsubCategorydata);
+  const allCategorydata = useSelector((state: any) => state.category.allCategorydata);
 
   // socket test
   const [notifications, setNotifications] = useState([]);
   console.log(notifications);
   useEffect(() => {
-    // socket connect হলে
+    // socket connect à¦¹à¦²à§‡
     socket.on("connect", () => {
-      console.log("🟢 Socket connected:", socket.id);
+      console.log("ðŸŸ¢ Socket connected:", socket.id);
     });
 
-    // নতুন notification এলে
+    // à¦¨à¦¤à§à¦¨ notification à¦à¦²à§‡
     socket.on("notification:new", (notif) => {
-      console.log("📩 New notification:", notif);
+      console.log("ðŸ“© New notification:", notif);
       setNotifications((prev) => [notif, ...prev]);
       toast.success(` ${notif.title}: ${notif.message}`);
     });
@@ -245,7 +245,7 @@ const AddProductComponent = () => {
       const response = await ProductCreate(formDataToSend);
 
       if (response?.success) {
-        toast.success("✅ Product added successfully!");
+        toast.success("âœ… Product added successfully!");
         resetForm();
 
         await ProductNotification({
@@ -260,7 +260,7 @@ const AddProductComponent = () => {
       }
     } catch (error) {
       console.error("Error adding product:", error);
-      toast.error("❌ Something went wrong! Please try again.");
+      toast.error("âŒ Something went wrong! Please try again.");
     } finally {
       setIsLoading(false);
     }

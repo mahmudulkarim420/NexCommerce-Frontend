@@ -186,7 +186,7 @@ const TrafficAnalyticsDashboard = () => {
                   value={formatNumber(analyticsData.totalVisitors)}
                   change="+12.5%"
                   positive={true}
-                  icon="👥"
+                  icon="ðŸ‘¥"
                   gradient="from-blue-500 to-cyan-500"
                 />
                 <EnhancedMetricCard
@@ -194,7 +194,7 @@ const TrafficAnalyticsDashboard = () => {
                   value={formatNumber(analyticsData.pageViews)}
                   change="+8.3%"
                   positive={true}
-                  icon="📄"
+                  icon="ðŸ“„"
                   gradient="from-purple-500 to-pink-500"
                 />
                 <EnhancedMetricCard
@@ -202,7 +202,7 @@ const TrafficAnalyticsDashboard = () => {
                   value={`${analyticsData.bounceRate}%`}
                   change="-2.1%"
                   positive={true}
-                  icon="⚡"
+                  icon="âš¡"
                   gradient="from-green-500 to-emerald-500"
                 />
                 <EnhancedMetricCard
@@ -210,7 +210,7 @@ const TrafficAnalyticsDashboard = () => {
                   value={formatDuration(analyticsData.avgSessionDuration)}
                   change="+15.2%"
                   positive={true}
-                  icon="⏱️"
+                  icon="â±ï¸"
                   gradient="from-orange-500 to-red-500"
                 />
                 <EnhancedMetricCard
@@ -218,7 +218,7 @@ const TrafficAnalyticsDashboard = () => {
                   value={`${analyticsData.conversionRate}%`}
                   change="+0.5%"
                   positive={true}
-                  icon="🎯"
+                  icon="ðŸŽ¯"
                   gradient="from-indigo-500 to-purple-500"
                 />
                 <EnhancedMetricCard
@@ -226,7 +226,7 @@ const TrafficAnalyticsDashboard = () => {
                   value={`$${formatNumber(analyticsData.revenue)}`}
                   change="+23.1%"
                   positive={true}
-                  icon="💰"
+                  icon="ðŸ’°"
                   gradient="from-yellow-500 to-orange-500"
                 />
               </>
@@ -312,7 +312,7 @@ const TrafficAnalyticsDashboard = () => {
         }}
         options={{
           responsive: true,
-          maintainAspectRatio: false, // ✨ important for resizing
+          maintainAspectRatio: false, // âœ¨ important for resizing
           cutout: "30%", // donut style
           plugins: {
             legend: { position: "bottom", labels: { color: "#fff", boxWidth: 12, padding: 10 } },

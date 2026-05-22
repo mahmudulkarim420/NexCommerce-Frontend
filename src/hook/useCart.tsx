@@ -1,4 +1,4 @@
-import { demoCart, simulateDelay } from "../data/demoData";
+import { cartService } from "../services/cart.service";
 import {
   cartAdd,
   cartClear,
@@ -9,66 +9,64 @@ import {
   cartUpdate,
 } from "../redux/cartSlice";
 
-// ------------------------ GET CART ------------------------
-export const getCartApi = async (userId, dispatch) => {
+export const getCartApi = async (userId: string, dispatch: any) => {
   try {
     dispatch(cartLoading());
-    await simulateDelay(600);
-    dispatch(cartSuccess(demoCart));
+    const cart = await cartService.getCart(userId);
+    dispatch(cartSuccess(cart.items || []));
   } catch (error) {
     dispatch(cartError("Get cart failed"));
   }
 };
 
-// ------------------------ ADD ------------------------
-export const addToCartApi = async (productData, dispatch) => {
+export const addToCartApi = async (productData: any, dispatch: any) => {
   try {
-    await simulateDelay(500);
-    // Simulate add
-    const newItem = {
-      ...productData,
+    dispatch(cartLoading());
+    const userId = "temp_user_id";
+    const res = await cartService.addItem({
+      userId,
+      productId: productData.id || productData.productId,
       quantity: productData.quantity || 1,
-    };
-    demoCart.push(newItem);
-    dispatch(cartAdd(newItem));
+      price: productData.price,
+    });
+    dispatch(
+      cartAdd({
+        ...productData,
+        quantity: productData.quantity || 1,
+        productId: productData.id || productData.productId,
+      }),
+    );
   } catch (error) {
     dispatch(cartError("Add to cart failed"));
   }
 };
 
-// ------------------------ UPDATE ------------------------
-export const updateCartItemApi = async (updateData, dispatch) => {
+export const updateCartItemApi = async (updateData: any, dispatch: any) => {
   try {
-    await simulateDelay(500);
-    const index = demoCart.findIndex((item) => item.productId === updateData.productId);
-    if (index !== -1) {
-      demoCart[index].quantity = updateData.quantity;
-      dispatch(cartUpdate(demoCart[index]));
-    }
+    const userId = "temp_user_id";
+    await cartService.updateItem({
+      userId,
+      productId: updateData.productId,
+      quantity: updateData.quantity,
+    });
+    dispatch(cartUpdate(updateData));
   } catch (error) {
     dispatch(cartError("Update cart failed"));
   }
 };
 
-// ------------------------ REMOVE ------------------------
-export const removeCartItemApi = async (userId, productId, dispatch) => {
+export const removeCartItemApi = async (userId: string, productId: string, dispatch: any) => {
   try {
-    await simulateDelay(500);
-    const index = demoCart.findIndex((item) => item.productId === productId);
-    if (index !== -1) {
-      demoCart.splice(index, 1);
-      dispatch(cartRemove(productId));
-    }
+    await cartService.removeItem(userId, productId);
+    dispatch(cartRemove(productId));
   } catch (error) {
     dispatch(cartError("Remove cart failed"));
   }
 };
 
-// ------------------------ CLEAR ------------------------
-export const clearCartApi = async (userId, dispatch) => {
+export const clearCartApi = async (userId: string, dispatch: any) => {
   try {
-    await simulateDelay(500);
-    demoCart.length = 0; // Clear the array
+    await cartService.clearCart(userId);
     dispatch(cartClear());
   } catch (error) {
     dispatch(cartError("Clear cart failed"));

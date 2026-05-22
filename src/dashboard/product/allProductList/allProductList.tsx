@@ -21,10 +21,10 @@ import {
   Zap,
   Globe,
 } from "lucide-react";
-import { useProduct } from "@/src/utlis/userProduct";
+import { useProduct } from "@/src/utils/userProduct";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { UrlFrontend } from "@/src/confic/urlExport";
+import { UrlFrontend } from "@/src/config/urlExport";
 import toast from "react-hot-toast";
 import { ProductDelete, ProductUpdate } from "@/src/hook/useProduct";
 
@@ -46,8 +46,8 @@ const ProductDashboard = () => {
 
   // product get
   const { product, loading, error, refetch } = useProduct(formData);
-  const allCategorydata = useSelector((state) => state.category.allCategorydata);
-  const allsubCategorydata = useSelector((state) => state.subcategory.allsubCategorydata);
+  const allCategorydata = useSelector((state: any) => state.category.allCategorydata);
+  const allsubCategorydata = useSelector((state: any) => state.subcategory.allsubCategorydata);
 
   // demo Sample product data after remove
   const [products, setProducts] = useState([]);
@@ -250,7 +250,7 @@ const ProductDashboard = () => {
             },
             {
               title: "Total Sales",
-              value: "৳2,45,320",
+              value: "à§³2,45,320",
               change: "+15.3%",
               icon: DollarSign,
               gradient: "from-amber-500 via-orange-500 to-red-500",
@@ -439,7 +439,7 @@ const ProductDashboard = () => {
                       <p className="text-xs text-gray-400 mb-1">{product?.sku}</p>
                       <div className="flex items-center space-x-2">
                         <span className="text-xs text-green-400 font-medium"> sales</span>
-                        <span className="text-xs text-gray-500">•</span>
+                        <span className="text-xs text-gray-500">â€¢</span>
                         <span className="text-xs text-blue-400 font-medium">
                           ID: #{product?._id}
                         </span>
@@ -662,7 +662,7 @@ const ProductDashboard = () => {
             },
             {
               title: "Revenue Today",
-              value: "৳12,450",
+              value: "à§³12,450",
               icon: DollarSign,
               color: "from-amber-500 to-orange-500",
               status: "+8%",
@@ -695,7 +695,7 @@ const ProductDashboard = () => {
             <span>
               Showing {filteredProducts?.length} of {totalProducts} products
             </span>
-            <span>•</span>
+            <span>â€¢</span>
             <span>Last updated: {currentTime.toLocaleString("en-BD")}</span>
           </div>
         </div>
@@ -756,7 +756,7 @@ const ProductDashboard = () => {
                     <DollarSign className="w-5 h-5 text-emerald-400" />
                     <span className="text-gray-400 text-sm">Price</span>
                   </div>
-                  <p className="text-white font-semibold text-2xl">৳{viewModal?.price}</p>
+                  <p className="text-white font-semibold text-2xl">à§³{viewModal?.price}</p>
                 </div>
 
                 <div className="bg-slate-700/30 rounded-xl p-4 border border-slate-600/50">
